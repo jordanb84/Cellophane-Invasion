@@ -4,10 +4,9 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.djam2.game.state.StateManager;
-import com.djam2.game.state.impl.StateTest;
+import com.djam2.game.state.impl.StateMap;
 
 public class Game extends ApplicationAdapter {
 
@@ -25,8 +24,8 @@ public class Game extends ApplicationAdapter {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		this.stateManager = new StateManager();
-		this.stateManager.registerState("test", new StateTest(this.stateManager));
-		this.stateManager.setActiveState("test");
+		this.stateManager.registerState("map", new StateMap(this.stateManager));
+		this.stateManager.setActiveState("map");
 	}
 
 	@Override

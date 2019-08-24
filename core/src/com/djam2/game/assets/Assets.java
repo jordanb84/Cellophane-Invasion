@@ -11,6 +11,20 @@ public class Assets {
     private AssetManager assetManager = new AssetManager();
 
     public Assets() {
+        this.loadTexture("tile/air.png");
+        this.loadTexture("tile/grass.png");
+        this.loadTexture("tile/flowers.png");
+        this.loadTexture("tile/stone.png");
+
+        this.loadTexture("entity/player_up0.png");
+        this.loadTexture("entity/player_up1.png");
+        this.loadTexture("entity/player_down0.png");
+        this.loadTexture("entity/player_down1.png");
+        this.loadTexture("entity/player_right0.png");
+        this.loadTexture("entity/player_right1.png");
+        this.loadTexture("entity/player_left0.png");
+        this.loadTexture("entity/player_left1.png");
+
         this.load();
     }
 
