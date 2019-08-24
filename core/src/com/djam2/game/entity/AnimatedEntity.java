@@ -10,8 +10,8 @@ public abstract class AnimatedEntity extends Entity {
 
     private DirectionalAnimation directionalAnimation;
 
-    public AnimatedEntity(Vector2 position, Map parentMap, float weight) {
-        super(position, parentMap, weight);
+    public AnimatedEntity(Vector2 position, Map parentMap, float weight, EntityType entityType) {
+        super(position, parentMap, weight, entityType);
         this.directionalAnimation = this.setupAnimation();
     }
 

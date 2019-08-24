@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.animation.Animation;
 import com.djam2.game.assets.Assets;
 import com.djam2.game.entity.Entity;
+import com.djam2.game.entity.EntityType;
 import com.djam2.game.map.Map;
 
 public class EntityExplosion extends Entity {
@@ -14,7 +15,7 @@ public class EntityExplosion extends Entity {
     private Animation animation;
 
     public EntityExplosion(Vector2 position, Map parentMap, float rotation) {
-        super(position, parentMap, 2);
+        super(position, parentMap, 2, EntityType.ENVIRONMENT);
         this.setRotation(rotation);
         this.animation = new Animation(0.12f);
         this.animation.addFrames("entity/explosion0.png", "entity/explosion1.png", "entity/explosion2.png", "entity/explosion3.png");

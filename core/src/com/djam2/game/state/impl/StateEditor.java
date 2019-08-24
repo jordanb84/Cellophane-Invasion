@@ -54,7 +54,7 @@ public class StateEditor extends State {
         this.testingCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         MapDefinition mapDefinition = new MapDefinition(3, 20, 20, 16, 16);
-        this.map = new Map(mapDefinition, TileType.Grass);
+        this.map = new Map(mapDefinition, TileType.Ground);
 
         this.overlaySprite = Assets.getInstance().getSprite("tile/overlay.png");
     }

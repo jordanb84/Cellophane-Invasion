@@ -5,7 +5,7 @@ import com.djam2.game.assets.Assets;
 import com.djam2.game.tile.impl.BasicTile;
 
 public enum TileType {
-    Air, Grass, Flowers, Stone(true)
+    Air, Ground, Flowers, Crate(true)
     ;
 
     TileType(String spritePath, boolean solid) {

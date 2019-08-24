@@ -2,6 +2,7 @@ package com.djam2.game.map;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.djam2.game.entity.Entity;
+import com.djam2.game.entity.living.impl.EntityBat;
 import com.djam2.game.entity.living.impl.EntityPlayer;
 import com.djam2.game.tile.TileType;
 
@@ -26,7 +28,7 @@ public class Map {
     private List<Entity> entitySpawnQueue = new ArrayList<Entity>();
     private List<Entity> entityDespawnQueue = new ArrayList<Entity>();
 
-    private float worldFriction = 2;
+    private float worldFriction = 140;
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
@@ -67,6 +69,8 @@ public class Map {
 
     private void spawnInitialEntities() {
         this.spawnEntity(new EntityPlayer(new Vector2(128, 128), this));
+
+        this.spawnEntity(new EntityBat(new Vector2(64, 64), this));
     }
 
     private void setupPhysicsWorld() {
@@ -134,20 +138,38 @@ public class Map {
     }
 
     public void applyEntityFriction(Entity entity) {
+        float relativeFriction = this.worldFriction;
+
+        float delta = Gdx.graphics.getDeltaTime();
+
+        System.out.println("Friction: " + this.worldFriction * delta);
+
+        if(relativeFriction > entity.getVelocity().x) {
+            //relativeFriction = entity.getVelocity().x;
+        }
+
         if(entity.getVelocity().x > 0) {
-            entity.getVelocity().x -= this.worldFriction;
+            entity.getVelocity().x -= relativeFriction * delta;
         }
 
         if(entity.getVelocity().x < 0) {
-            entity.getVelocity().x += this.worldFriction;
+            entity.getVelocity().x += relativeFriction * delta;
         }
 
         if(entity.getVelocity().y > 0) {
-            entity.getVelocity().y -= this.worldFriction;
+            entity.getVelocity().y -= this.worldFriction * delta;
         }
 
         if(entity.getVelocity().y < 0) {
-            entity.getVelocity().y += this.worldFriction;
+            entity.getVelocity().y += this.worldFriction * delta;
+        }
+
+        if(Math.abs(entity.getVelocity().x) < 1) {
+            //entity.getVelocity().set(0, entity.getVelocity().y);
+        }
+
+        if(Math.abs(entity.getVelocity().y) < 1) {
+            //entity.getVelocity().set(entity.getVelocity().x, 0);
         }
     }
 

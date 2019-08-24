@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.animation.Animation;
 import com.djam2.game.animation.DirectionalAnimation;
+import com.djam2.game.entity.EntityType;
 import com.djam2.game.entity.living.LivingEntity;
 import com.djam2.game.entity.mind.EntityMind;
 import com.djam2.game.entity.mind.impl.PlayerMind;
@@ -12,7 +13,7 @@ import com.djam2.game.map.Map;
 public class EntityPlayer extends LivingEntity {
 
     public EntityPlayer(Vector2 position, Map parentMap) {
-        super(position, parentMap, 5);
+        super(position, parentMap, 5, EntityType.PLAYER);
         this.setSpeed(11, 11);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 60);

@@ -33,12 +33,20 @@ public abstract class Entity {
 
     private float rotation;
 
-    public Entity(Vector2 position, Map parentMap, float weight) {
+    private EntityType entityType;
+
+    private boolean applyingKnockback;
+    private float knockbackAngle;
+    private float knockbackDuration;
+    private float knockbackElapsed;
+
+    public Entity(Vector2 position, Map parentMap, float weight, EntityType entityType) {
         this.position = position;
         this.parentMap = parentMap;
         this.direction = Direction.RIGHT;
         this.weight = weight;
         this.body = new Rectangle();
+        this.entityType = entityType;
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
@@ -69,6 +77,28 @@ public abstract class Entity {
 
         if(this.hasLight()) {
             this.getLight().setPosition(this.getPosition().x + this.getWidth() / 2, this.getPosition().y + this.getHeight() / 2);
+        }
+
+        this.applyActiveKnockback();
+    }
+
+    public void knockback(float knockbackAngle, float knockbackDuration) {
+        this.applyingKnockback = true;
+        this.knockbackAngle = knockbackAngle;
+        this.knockbackDuration = knockbackDuration;
+    }
+
+    private void applyActiveKnockback() {
+        if(this.applyingKnockback) {
+            this.moveAlongRotation(this.knockbackAngle);
+
+            this.knockbackElapsed += 1 * Gdx.graphics.getDeltaTime();
+
+            if(this.knockbackElapsed >= this.knockbackDuration) {
+                this.knockbackElapsed = 0;
+                this.knockbackDuration = 0;
+                this.applyingKnockback = false;
+            }
         }
     }
 
@@ -295,6 +325,30 @@ public abstract class Entity {
 
     public void setRotation(float rotation) {
         this.rotation = rotation;
+    }
+
+    public EntityType getEntityType() {
+        return this.entityType;
+    }
+
+    public void moveAlongRotation(float rotation) {
+        float speed = this.getVelocity().x;
+        speed = speed * 10 * Gdx.graphics.getDeltaTime();
+
+        float xRotationMovement = -speed * (float) Math.cos(Math.toRadians(rotation - 90));
+        float yRotationMovement = -speed * (float) Math.sin(Math.toRadians(rotation - 90));
+
+        float delta = Gdx.graphics.getDeltaTime();
+
+        this.getPosition().add(xRotationMovement, 0);
+        this.getPosition().add(0, yRotationMovement);
+
+        this.modifyVelocity(this.getAcceleration().x * 5 * delta, this.getAcceleration().y * 5 * delta, true);
+
+    }
+
+    public void moveAlongCurrentRotation() {
+        this.moveAlongRotation(this.getRotation());
     }
 
 }

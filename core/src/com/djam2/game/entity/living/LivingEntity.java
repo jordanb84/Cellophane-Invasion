@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.djam2.game.entity.AnimatedEntity;
+import com.djam2.game.entity.Entity;
+import com.djam2.game.entity.EntityType;
 import com.djam2.game.entity.mind.EntityMind;
 import com.djam2.game.map.Map;
 
@@ -14,8 +16,10 @@ public abstract class LivingEntity extends AnimatedEntity {
 
     private Body physicsBody;
 
-    public LivingEntity(Vector2 position, Map parentMap, float weight) {
-        super(position, parentMap, weight);
+    private float health = 100;
+
+    public LivingEntity(Vector2 position, Map parentMap, float weight, EntityType entityType) {
+        super(position, parentMap, weight, entityType);
         this.mind = this.setupMind();
     }
 
@@ -58,6 +62,10 @@ public abstract class LivingEntity extends AnimatedEntity {
         if(this.hasPhysicsBody()) {
             this.updatePhysicsBody();
         }
+
+        if(this.getHealth() <= 0) {
+            this.getParentMap().despawnEntity(this); //TODO more elaborate death, like bodies etc
+        }
     }
 
     public abstract EntityMind setupMind();
@@ -68,6 +76,18 @@ public abstract class LivingEntity extends AnimatedEntity {
 
     public boolean hasPhysicsBody() {
         return this.physicsBody != null;
+    }
+
+    public void damage(float damage) {
+        this.health -= damage;
+    }
+
+    public float getHealth() {
+        return this.health;
+    }
+
+    public void setHealth(float health) {
+        this.health = health;
     }
 
 }

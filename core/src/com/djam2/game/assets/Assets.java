@@ -12,9 +12,9 @@ public class Assets {
 
     public Assets() {
         this.loadTexture("tile/air.png");
-        this.loadTexture("tile/grass.png");
+        this.loadTexture("tile/ground.png");
         this.loadTexture("tile/flowers.png");
-        this.loadTexture("tile/stone.png");
+        this.loadTexture("tile/crate.png");
         this.loadTexture("tile/overlay.png");
 
         this.loadTexture("entity/player_up0.png");
@@ -38,6 +38,7 @@ public class Assets {
         this.loadTexture("entity/explosion9.png");
         this.loadTexture("entity/explosion10.png");
         this.loadTexture("entity/explosion11.png");
+        this.loadTexture("entity/bat.png");
 
         this.load();
     }

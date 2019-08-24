@@ -8,6 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.assets.Assets;
 import com.djam2.game.entity.Direction;
 import com.djam2.game.entity.Entity;
+import com.djam2.game.entity.EntityType;
+import com.djam2.game.entity.living.EntityEnemy;
+import com.djam2.game.entity.living.LivingEntity;
+import com.djam2.game.entity.living.impl.EntityPlayer;
 import com.djam2.game.map.Map;
 
 public class EntityBullet extends Entity {
@@ -15,8 +19,12 @@ public class EntityBullet extends Entity {
     private Vector2 destination;
     private Rectangle destinationBody;
 
-    public EntityBullet(Vector2 position, Vector2 destination, Map parentMap) {
-        super(position, parentMap, 2);
+    private float damage;
+
+    private EntityType targetType;
+
+    public EntityBullet(Vector2 position, Vector2 destination, Map parentMap, float damage, EntityType targetType) {
+        super(position, parentMap, 2, EntityType.PROJECTILE);
         this.destination = destination;
         this.setSprite(Assets.getInstance().getSprite("entity/bullet.png"));
         this.destinationBody = new Rectangle(this.destination.x, this.destination.y, this.getWidth(), this.getHeight());
@@ -26,6 +34,9 @@ public class EntityBullet extends Entity {
 
         //this.getAcceleration().set(this.getAcceleration().x * 0.85f, this.getAcceleration().y * 0.85f);
         this.getAcceleration().set(this.getAcceleration().x * 10, this.getAcceleration().y * 10);
+
+        this.damage = damage;
+        this.targetType = targetType;
     }
 
     @Override
@@ -43,21 +54,16 @@ public class EntityBullet extends Entity {
         if(this.getBody().overlaps(this.destinationBody)) {
             this.explode();
         }
-    }
 
-    public void moveAlongCurrentRotation() {
-        float speed = this.getVelocity().x;
-        speed = speed * 10 * Gdx.graphics.getDeltaTime();
-
-        float xRotationMovement = -speed * (float) Math.cos(Math.toRadians(this.getRotation() - 90));
-        float yRotationMovement = -speed * (float) Math.sin(Math.toRadians(this.getRotation() - 90));
-
-        float delta = Gdx.graphics.getDeltaTime();
-
-        this.getPosition().add(xRotationMovement, 0);
-        this.getPosition().add(0, yRotationMovement);
-
-        this.modifyVelocity(this.getAcceleration().x * 5 * delta, this.getAcceleration().y * 5 * delta, true);
+        for(Entity entity : this.getParentMap().getEntities()) {
+            if(entity.getEntityType() == this.targetType) {
+                if (entity.getBody().overlaps(this.getBody())) {
+                    ((LivingEntity) entity).damage(this.damage);
+                    entity.knockback(this.getRotation(), 2);
+                    this.explode();
+                }
+            }
+        }
     }
 
     @Override

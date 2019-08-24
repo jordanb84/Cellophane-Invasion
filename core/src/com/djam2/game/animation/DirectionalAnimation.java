@@ -18,6 +18,12 @@ public class DirectionalAnimation {
         this.animations.put(Direction.LEFT, leftAnimation);
     }
 
+    public DirectionalAnimation(Animation allAnimation) {
+        for(Direction direction : Direction.values()) {
+            this.animations.put(direction, allAnimation);
+        }
+    }
+
     public void render(SpriteBatch batch, Vector2 position, Direction direction) {
         this.animations.get(direction).render(batch, position);
     }
