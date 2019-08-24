@@ -1,5 +1,6 @@
 package com.djam2.game.entity.impl;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,43 +14,50 @@ public class EntityBullet extends Entity {
     private Vector2 destination;
     private Rectangle destinationBody;
 
-    private float rotation;
-
     public EntityBullet(Vector2 position, Vector2 destination, Map parentMap) {
         super(position, parentMap, 2);
         this.destination = destination;
         this.setSprite(Assets.getInstance().getSprite("entity/bullet.png"));
         this.destinationBody = new Rectangle(this.destination.x, this.destination.y, this.getWidth(), this.getHeight());
-        this.setSpeed(2.4f, 2.4f);
+        this.setSpeed(2.8f, 2.8f);
 
-        this.rotation = ((float) this.getRotationTowardPosition(this.destination));
+        this.setRotation(((float) this.getRotationTowardPosition(this.destination)));
 
         //this.getAcceleration().set(this.getAcceleration().x * 0.85f, this.getAcceleration().y * 0.85f);
+        this.getAcceleration().set(this.getAcceleration().x * 10, this.getAcceleration().y * 10);
     }
 
     @Override
     public void render(SpriteBatch batch, OrthographicCamera camera) {
-        this.getSprite().setRotation(this.rotation);
         super.render(batch, camera);
-        this.getSprite().setRotation(0);
     }
 
     @Override
     public void update(OrthographicCamera camera) {
         super.update(camera);
+        this.setRotation(((float) this.getRotationTowardPosition(this.destination)));
+
         this.moveAlongCurrentRotation();
 
         if(this.getBody().overlaps(this.destinationBody)) {
             this.getParentMap().despawnEntity(this);
-            this.getParentMap().spawnEntity(new EntityExplosion(new Vector2(this.getPosition()), this.getParentMap()));
+            this.getParentMap().spawnEntity(new EntityExplosion(new Vector2(this.getPosition()), this.getParentMap(), this.getRotation()));
         }
     }
 
     public void moveAlongCurrentRotation() {
-        this.getPosition().add(-this.getVelocity().x * (float) Math.cos(Math.toRadians(this.rotation - 90)), 0);
-        this.getPosition().add(0, -this.getVelocity().x * (float) Math.sin(Math.toRadians(this.rotation - 90)));
+        float speed = this.getVelocity().x;
+        speed = speed * 10 * Gdx.graphics.getDeltaTime();
 
-        this.modifyVelocity(this.getAcceleration().x, this.getAcceleration().y, true);
+        float xRotationMovement = -speed * (float) Math.cos(Math.toRadians(this.getRotation() - 90));
+        float yRotationMovement = -speed * (float) Math.sin(Math.toRadians(this.getRotation() - 90));
+
+        float delta = Gdx.graphics.getDeltaTime();
+
+        this.getPosition().add(xRotationMovement, 0);
+        this.getPosition().add(0, yRotationMovement);
+
+        this.modifyVelocity(this.getAcceleration().x * 5 * delta, this.getAcceleration().y * 5 * delta, true);
     }
 
 }

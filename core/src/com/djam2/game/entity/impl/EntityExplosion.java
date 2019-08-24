@@ -13,8 +13,9 @@ public class EntityExplosion extends Entity {
 
     private Animation animation;
 
-    public EntityExplosion(Vector2 position, Map parentMap) {
+    public EntityExplosion(Vector2 position, Map parentMap, float rotation) {
         super(position, parentMap, 2);
+        this.setRotation(rotation);
         this.animation = new Animation(0.12f);
         this.animation.addFrames("entity/explosion0.png", "entity/explosion1.png", "entity/explosion2.png", "entity/explosion3.png");
         this.animation.addFrames("entity/explosion4.png", "entity/explosion5.png", "entity/explosion6.png", "entity/explosion7.png");
@@ -23,8 +24,10 @@ public class EntityExplosion extends Entity {
 
     @Override
     public void render(SpriteBatch batch, OrthographicCamera camera) {
-        super.render(batch, camera);
-        //rotation?
+        this.getSprite().setPosition(this.getPosition().x - this.getWidth() / 2, this.getPosition().y - this.getHeight() / 2);
+        this.getSprite().setRotation(this.getRotation());
+        this.getSprite().draw(batch);
+        this.getSprite().setRotation(0);
     }
 
     @Override

@@ -31,6 +31,8 @@ public abstract class Entity {
 
     private PointLight light;
 
+    private float rotation;
+
     public Entity(Vector2 position, Map parentMap, float weight) {
         this.position = position;
         this.parentMap = parentMap;
@@ -41,7 +43,9 @@ public abstract class Entity {
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         this.getSprite().setPosition(this.getPosition().x, this.getPosition().y);
+        this.getSprite().setRotation(this.getRotation());
         this.getSprite().draw(batch);
+        this.getSprite().setRotation(0);
     }
 
     public void update(OrthographicCamera camera) {
@@ -269,6 +273,14 @@ public abstract class Entity {
 
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
+    }
+
+    public float getRotation() {
+        return this.rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
     }
 
 }
