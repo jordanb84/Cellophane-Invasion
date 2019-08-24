@@ -13,7 +13,7 @@ public class EntityPlayer extends LivingEntity {
 
     public EntityPlayer(Vector2 position, Map parentMap) {
         super(position, parentMap, 5);
-        this.setSpeed(4, 4);
+        this.setSpeed(11, 11);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 60);
     }

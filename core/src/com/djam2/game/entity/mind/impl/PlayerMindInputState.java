@@ -29,20 +29,47 @@ public class PlayerMindInputState extends EntityMindState {
 
     @Override
     public void update(OrthographicCamera camera, LivingEntity parentEntity) {
+        float rotationSpeed = 500 * Gdx.graphics.getDeltaTime();
+
         if(Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
             parentEntity.move(Direction.UP);
+
+            if(parentEntity.getRotation() > 0) {
+                parentEntity.setRotation(parentEntity.getRotation() - rotationSpeed);
+            }
+
+            if(parentEntity.getRotation() < 0) {
+                parentEntity.setRotation(parentEntity.getRotation() + rotationSpeed);
+            }
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             parentEntity.move(Direction.DOWN);
+
+            if(parentEntity.getRotation() > -180) {
+                parentEntity.setRotation(parentEntity.getRotation() - rotationSpeed);
+            }
+
+            if(parentEntity.getRotation() < -180) {
+                parentEntity.setRotation(parentEntity.getRotation() + rotationSpeed);
+            }
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             parentEntity.move(Direction.RIGHT);
+
+            if(!(parentEntity.getRotation() <= -90)) {
+                parentEntity.setRotation(parentEntity.getRotation() - rotationSpeed);
+            }
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             parentEntity.move(Direction.LEFT);
+
+            if(!(parentEntity.getRotation() >= 90)) {
+                parentEntity.setRotation(parentEntity.getRotation() + rotationSpeed);
+            }
+
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {

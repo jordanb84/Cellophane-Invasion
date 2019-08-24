@@ -46,6 +46,20 @@ public abstract class Entity {
         this.getSprite().setRotation(this.getRotation());
         this.getSprite().draw(batch);
         this.getSprite().setRotation(0);
+
+        this.renderShadow(batch);
+    }
+
+    private void renderShadow(SpriteBatch batch) {
+        this.getSprite().setColor(Color.BLACK);
+        this.getSprite().setPosition(this.getPosition().x - this.getWidth(), this.getPosition().y - this.getHeight());
+        this.getSprite().setRotation(this.getRotation());
+        this.getSprite().setAlpha(0.5f);
+        this.getSprite().draw(batch);
+        this.getSprite().setColor(Color.WHITE);
+
+        this.getSprite().setAlpha(1);
+        this.getSprite().setRotation(0);
     }
 
     public void update(OrthographicCamera camera) {
