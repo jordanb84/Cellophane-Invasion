@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.assets.Assets;
+import com.djam2.game.entity.Direction;
 import com.djam2.game.entity.Entity;
 import com.djam2.game.map.Map;
 
@@ -19,7 +20,7 @@ public class EntityBullet extends Entity {
         this.destination = destination;
         this.setSprite(Assets.getInstance().getSprite("entity/bullet.png"));
         this.destinationBody = new Rectangle(this.destination.x, this.destination.y, this.getWidth(), this.getHeight());
-        this.setSpeed(2.8f, 2.8f);
+        this.setSpeed(3.2f, 3.2f);
 
         this.setRotation(((float) this.getRotationTowardPosition(this.destination)));
 
@@ -40,8 +41,7 @@ public class EntityBullet extends Entity {
         this.moveAlongCurrentRotation();
 
         if(this.getBody().overlaps(this.destinationBody)) {
-            this.getParentMap().despawnEntity(this);
-            this.getParentMap().spawnEntity(new EntityExplosion(new Vector2(this.getPosition()), this.getParentMap(), this.getRotation()));
+            this.explode();
         }
     }
 
@@ -58,6 +58,17 @@ public class EntityBullet extends Entity {
         this.getPosition().add(0, yRotationMovement);
 
         this.modifyVelocity(this.getAcceleration().x * 5 * delta, this.getAcceleration().y * 5 * delta, true);
+    }
+
+    @Override
+    public void onCollision(Direction direction) {
+        super.onCollision(direction);
+        this.explode();
+    }
+
+    private void explode() {
+        this.getParentMap().despawnEntity(this);
+        this.getParentMap().spawnEntity(new EntityExplosion(new Vector2(this.getPosition()), this.getParentMap(), this.getRotation()));
     }
 
 }

@@ -58,7 +58,15 @@ public class PlayerMindInputState extends EntityMindState {
         if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             parentEntity.move(Direction.RIGHT);
 
-            if(!(parentEntity.getRotation() <= -90)) {
+            /**if(!(parentEntity.getRotation() <= -90)) {
+                parentEntity.setRotation(parentEntity.getRotation() - rotationSpeed);
+            }**/
+
+            if(parentEntity.getRotation() <= -90) {
+                parentEntity.setRotation(parentEntity.getRotation() + rotationSpeed);
+            }
+
+            if(parentEntity.getRotation() >= -90) {
                 parentEntity.setRotation(parentEntity.getRotation() - rotationSpeed);
             }
         }
@@ -66,11 +74,16 @@ public class PlayerMindInputState extends EntityMindState {
         if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             parentEntity.move(Direction.LEFT);
 
-            if(!(parentEntity.getRotation() >= 90)) {
-                parentEntity.setRotation(parentEntity.getRotation() + rotationSpeed);
+            if(parentEntity.getRotation() >= 90) {
+                parentEntity.setRotation(parentEntity.getRotation() - rotationSpeed);
             }
 
+            if(parentEntity.getRotation() <= 90) {
+                parentEntity.setRotation(parentEntity.getRotation() + rotationSpeed);
+            }
         }
+
+        //System.out.println(parentEntity.getRotation());
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             if(this.elapsedSinceFire >= this.fireInterval) {

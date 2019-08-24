@@ -15,6 +15,7 @@ public class Assets {
         this.loadTexture("tile/grass.png");
         this.loadTexture("tile/flowers.png");
         this.loadTexture("tile/stone.png");
+        this.loadTexture("tile/overlay.png");
 
         this.loadTexture("entity/player_up0.png");
         this.loadTexture("entity/player_up1.png");

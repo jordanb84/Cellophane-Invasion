@@ -14,7 +14,7 @@ public class MapImporter {
     private static final MapImporter INSTANCE = new MapImporter();
 
     public Map getMapFromFile(FileHandle file) {
-        MapDefinition mapDefinition = new MapDefinition(3, 10, 10, 16, 16);
+        MapDefinition mapDefinition = new MapDefinition(3, 20, 20, 16, 16);
 
         Map map = new Map(mapDefinition, this.getTilesFromFile(file, mapDefinition));
 

@@ -26,7 +26,7 @@ public class EntityPlayer extends LivingEntity {
         upAnimation.addFrames("entity/player_up0.png", "entity/player_up1.png");
 
         Animation downAnimation = new Animation(frameDuration);
-        downAnimation.addFrames("entity/player_down0.png", "entity/player_down1.png");
+        downAnimation.addFrames("entity/player_up0.png", "entity/player_up1.png");
 
         Animation rightAnimation = new Animation(frameDuration);
         rightAnimation.addFrames("entity/player_right0.png", "entity/player_right1.png");
