@@ -18,10 +18,10 @@ public class EntityBat extends EntityEnemy {
 
     public EntityBat(Vector2 position, Map parentMap) {
         super(position, parentMap, 6);
-        this.setSpeed(11, 11);
+        this.setSpeed(3, 3);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 40); //TODO cyan maybe?
-        this.setHealth(100);
+        this.setHealth(1000);
     }
 
     @Override
@@ -49,5 +49,4 @@ public class EntityBat extends EntityEnemy {
     public Sprite getHurtSprite() { //TODO getHurtSprite(int stage), returns getStage(0) if null
         return Assets.getInstance().getSprite("entity/bat_blood0.png");
     }
-
 }

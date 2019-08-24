@@ -45,7 +45,7 @@ public class Map {
 
     private ShapeRenderer shapeRenderer;
 
-    private boolean renderDebugBodies = true;
+    private boolean renderDebugBodies = false;
 
     private IndexedAStarPathFinder pathFinder;
     private ManhattanHeuristic heuristic = new ManhattanHeuristic();
@@ -85,14 +85,14 @@ public class Map {
         this.rayHandler.setAmbientLight(Color.LIGHT_GRAY);
         RayHandler.useDiffuseLight(true);
 
+        this.setupPathfindingMap();
+
+        this.generatePath(TileType.Start, TileType.End, this.graphPath);
+
         this.spawnInitialEntities();
 
         this.shapeRenderer = new ShapeRenderer();
         this.shapeRenderer.setAutoShapeType(true);
-
-        this.setupPathfindingMap();
-
-        this.generatePath(TileType.Start, TileType.End, this.graphPath);
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
@@ -250,7 +250,7 @@ public class Map {
         Random batPositionRandom = new Random();
 
         for(int bats = 0; bats < 15; bats++) {
-            this.spawnEntity(new EntityBat(new Vector2(batPositionRandom.nextInt(200), batPositionRandom.nextInt(200)), this));
+            //this.spawnEntity(new EntityBat(new Vector2(batPositionRandom.nextInt(200), batPositionRandom.nextInt(200)), this));
         }
     }
 

@@ -91,7 +91,8 @@ public abstract class Entity {
 
     private void applyActiveKnockback() {
         if(this.applyingKnockback) {
-            this.moveAlongRotation(this.knockbackAngle);
+            //System.out.println(this.getVelocity().x / 8);
+            this.moveAlongRotation(this.knockbackAngle, this.getVelocity().x / 8);
 
             this.knockbackElapsed += 1 * Gdx.graphics.getDeltaTime();
 
@@ -337,7 +338,10 @@ public abstract class Entity {
     }
 
     public void moveAlongRotation(float rotation) {
-        float speed = this.getVelocity().x;
+        this.moveAlongRotation(rotation, this.getVelocity().x);
+    }
+
+    public void moveAlongRotation(float rotation, float speed) {
         speed = speed * 10 * Gdx.graphics.getDeltaTime();
 
         float xRotationMovement = -speed * (float) Math.cos(Math.toRadians(rotation - 90));

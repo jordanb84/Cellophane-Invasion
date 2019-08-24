@@ -27,7 +27,7 @@ public class Game extends ApplicationAdapter {
 		this.stateManager = new StateManager();
 		this.stateManager.registerState("map", new StateMap(this.stateManager));
 		this.stateManager.registerState("editor", new StateEditor(this.stateManager));
-		this.stateManager.setActiveState("map");
+		this.stateManager.setActiveState("editor");
 	}
 
 	@Override
