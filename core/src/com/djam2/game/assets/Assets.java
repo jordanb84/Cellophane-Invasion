@@ -16,6 +16,8 @@ public class Assets {
         this.loadTexture("tile/flowers.png");
         this.loadTexture("tile/crate.png");
         this.loadTexture("tile/overlay.png");
+        this.loadTexture("tile/start.png");
+        this.loadTexture("tile/end.png");
 
         this.loadTexture("entity/player_up0.png");
         this.loadTexture("entity/player_up1.png");
@@ -39,6 +41,7 @@ public class Assets {
         this.loadTexture("entity/explosion10.png");
         this.loadTexture("entity/explosion11.png");
         this.loadTexture("entity/bat.png");
+        this.loadTexture("entity/bat_blood0.png");
 
         this.load();
     }

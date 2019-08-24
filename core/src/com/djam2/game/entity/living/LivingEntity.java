@@ -19,9 +19,12 @@ public abstract class LivingEntity extends AnimatedEntity {
 
     private float health = 100;
 
+    private float originalHealth;
+
     public LivingEntity(Vector2 position, Map parentMap, float weight, EntityType entityType) {
         super(position, parentMap, weight, entityType);
         this.mind = this.setupMind();
+        this.originalHealth = this.health;
     }
 
     public void addPhysicsBody() {
@@ -101,4 +104,7 @@ public abstract class LivingEntity extends AnimatedEntity {
         this.health = health;
     }
 
+    public boolean isDamaged() {
+        return this.getHealth() < this.originalHealth;
+    }
 }

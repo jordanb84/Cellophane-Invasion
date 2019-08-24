@@ -3,6 +3,7 @@ package com.djam2.game.entity.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.assets.Assets;
@@ -75,6 +76,11 @@ public class EntityBullet extends Entity {
     private void explode() {
         this.getParentMap().despawnEntity(this);
         this.getParentMap().spawnEntity(new EntityExplosion(new Vector2(this.getPosition()), this.getParentMap(), this.getRotation()));
+    }
+
+    @Override
+    public void updateBody() {
+        this.getBodyNoUpdate().set(this.getPosition().x - this.getWidth() / 4, this.getPosition().y - this.getHeight() / 4, this.getWidth() * 1.5f, this.getHeight() * 1.5f);
     }
 
 }

@@ -59,7 +59,7 @@ public abstract class Entity {
         this.renderShadow(batch);
     }
 
-    private void renderShadow(SpriteBatch batch) {
+    public void renderShadow(SpriteBatch batch) {
         this.getSprite().setColor(Color.BLACK);
         this.getSprite().setPosition(this.getPosition().x - this.getWidth(), this.getPosition().y - this.getHeight());
         this.getSprite().setRotation(this.getRotation());

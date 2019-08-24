@@ -1,7 +1,9 @@
 package com.djam2.game.state.impl;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.djam2.game.io.MapImporter;
 import com.djam2.game.map.Map;
 import com.djam2.game.map.MapDefinition;
 import com.djam2.game.state.State;
@@ -19,7 +21,9 @@ public class StateMap extends State {
     @Override
     public void create() {
         MapDefinition mapDefinition = new MapDefinition(3, 20, 20, 16, 16);
-        this.map = new Map(mapDefinition, TileType.Ground);
+        //this.map = new Map(mapDefinition, TileType.Ground);
+
+        this.map = MapImporter.getInstance().getMapFromFile(Gdx.files.internal("map/path.map"));
     }
 
     @Override

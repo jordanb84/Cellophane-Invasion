@@ -44,9 +44,4 @@ public class EntityExplosion extends Entity {
         }
     }
 
-    @Override
-    public void updateBody() {
-        this.getBodyNoUpdate().set(this.getPosition().x - this.getWidth(), this.getPosition().y - this.getHeight(), this.getWidth() * 2, this.getHeight() * 2);
-    }
-
 }
