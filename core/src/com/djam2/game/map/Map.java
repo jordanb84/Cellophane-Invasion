@@ -17,6 +17,7 @@ import com.djam2.game.tile.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Map {
 
@@ -71,6 +72,12 @@ public class Map {
         this.spawnEntity(new EntityPlayer(new Vector2(128, 128), this));
 
         this.spawnEntity(new EntityBat(new Vector2(64, 64), this));
+
+        Random batPositionRandom = new Random();
+
+        for(int bats = 0; bats < 15; bats++) {
+            this.spawnEntity(new EntityBat(new Vector2(batPositionRandom.nextInt(200), batPositionRandom.nextInt(200)), this));
+        }
     }
 
     private void setupPhysicsWorld() {
@@ -142,7 +149,7 @@ public class Map {
 
         float delta = Gdx.graphics.getDeltaTime();
 
-        System.out.println("Friction: " + this.worldFriction * delta);
+        //System.out.println("Friction: " + this.worldFriction * delta);
 
         if(relativeFriction > entity.getVelocity().x) {
             //relativeFriction = entity.getVelocity().x;

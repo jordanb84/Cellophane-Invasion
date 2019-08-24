@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.map.Map;
+import org.w3c.dom.css.Rect;
 
 public abstract class Entity {
 
@@ -232,6 +233,10 @@ public abstract class Entity {
 
     public Rectangle getBody() {
         this.updateBody();
+        return this.body;
+    }
+
+    public Rectangle getBodyNoUpdate() {
         return this.body;
     }
 

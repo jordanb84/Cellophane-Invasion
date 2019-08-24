@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.djam2.game.entity.AnimatedEntity;
 import com.djam2.game.entity.Entity;
+import com.djam2.game.entity.EntityBody;
 import com.djam2.game.entity.EntityType;
 import com.djam2.game.entity.mind.EntityMind;
 import com.djam2.game.map.Map;
@@ -64,7 +65,17 @@ public abstract class LivingEntity extends AnimatedEntity {
         }
 
         if(this.getHealth() <= 0) {
-            this.getParentMap().despawnEntity(this); //TODO more elaborate death, like bodies etc
+            this.die();
+        }
+    }
+
+    public void die() {
+        this.getParentMap().despawnEntity(this); //TODO more elaborate death, like bodies etc
+
+        this.getParentMap().spawnEntity(new EntityBody(this.getPosition(), this.getParentMap(), this.getSprite(), this.getRotation()));
+
+        if(this.hasLight()) {
+            this.getLight().setActive(false);
         }
     }
 

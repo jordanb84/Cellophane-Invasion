@@ -27,8 +27,10 @@ public class EntityExplosion extends Entity {
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         this.getSprite().setPosition(this.getPosition().x - this.getWidth() / 2, this.getPosition().y - this.getHeight() / 2);
         this.getSprite().setRotation(this.getRotation());
+        this.getSprite().setAlpha(0.8f);
         this.getSprite().draw(batch);
         this.getSprite().setRotation(0);
+        this.getSprite().setAlpha(1f);
     }
 
     @Override
@@ -40,6 +42,11 @@ public class EntityExplosion extends Entity {
         if(this.animation.isCompleted()) {
             this.getParentMap().despawnEntity(this);
         }
+    }
+
+    @Override
+    public void updateBody() {
+        this.getBodyNoUpdate().set(this.getPosition().x - this.getWidth(), this.getPosition().y - this.getHeight(), this.getWidth() * 2, this.getHeight() * 2);
     }
 
 }

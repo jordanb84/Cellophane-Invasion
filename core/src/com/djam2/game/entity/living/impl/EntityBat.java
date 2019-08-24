@@ -18,8 +18,8 @@ public class EntityBat extends EntityEnemy {
         super(position, parentMap, 6);
         this.setSpeed(11, 11);
         this.addPhysicsBody();
-        this.addLight(Color.WHITE, 60);
-        this.setHealth(1000);
+        this.addLight(Color.WHITE, 40); //TODO cyan maybe?
+        this.setHealth(100);
     }
 
     @Override
@@ -40,6 +40,6 @@ public class EntityBat extends EntityEnemy {
     @Override
     public void update(OrthographicCamera camera) {
         super.update(camera);
-        System.out.println(this.getVelocity().x + "/" + this.getVelocity().y);
+        //System.out.println(this.getVelocity().x + "/" + this.getVelocity().y);
     }
 }
