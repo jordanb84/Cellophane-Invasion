@@ -19,6 +19,8 @@ public class Animation {
 
     private float defaultFrameDuration;
 
+    private boolean completed;
+
     public Animation(float defaultFrameDuration) {
         this.defaultFrameDuration = defaultFrameDuration;
     }
@@ -59,6 +61,7 @@ public class Animation {
 
         if(this.currentFrame >= this.frames.size()) {
             this.currentFrame = 0;
+            this.completed = true;
         }
 
         this.elapsedSinceFrameChange = 0;
@@ -74,6 +77,10 @@ public class Animation {
 
     public float getCurrentHeight() {
         return this.getCurrentFrame().getSprite().getHeight();
+    }
+
+    public boolean isCompleted() {
+        return this.completed;
     }
 
 }

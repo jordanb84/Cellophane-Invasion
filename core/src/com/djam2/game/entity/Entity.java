@@ -256,4 +256,19 @@ public abstract class Entity {
     public boolean hasLight() {
         return this.light != null;
     }
+
+    public double getRotationTowardPosition(Vector2 position) {
+        double angle = Math.atan2(position.y - this.getPosition().y, position.x - this.getPosition().x);
+
+        angle = angle * (180 / Math.PI);
+
+        angle -= 90;
+
+        return angle;
+    }
+
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
+
 }

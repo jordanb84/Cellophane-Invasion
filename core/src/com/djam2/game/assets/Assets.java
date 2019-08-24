@@ -24,6 +24,19 @@ public class Assets {
         this.loadTexture("entity/player_right1.png");
         this.loadTexture("entity/player_left0.png");
         this.loadTexture("entity/player_left1.png");
+        this.loadTexture("entity/bullet.png");
+        this.loadTexture("entity/explosion0.png");
+        this.loadTexture("entity/explosion1.png");
+        this.loadTexture("entity/explosion2.png");
+        this.loadTexture("entity/explosion3.png");
+        this.loadTexture("entity/explosion4.png");
+        this.loadTexture("entity/explosion5.png");
+        this.loadTexture("entity/explosion6.png");
+        this.loadTexture("entity/explosion7.png");
+        this.loadTexture("entity/explosion8.png");
+        this.loadTexture("entity/explosion9.png");
+        this.loadTexture("entity/explosion10.png");
+        this.loadTexture("entity/explosion11.png");
 
         this.load();
     }
