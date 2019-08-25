@@ -80,6 +80,8 @@ public class Map {
     private float elaspedSinceLost;
     private boolean shownLostMessage;
 
+    private float elapsedSinceWon;
+
     public Map(MapDefinition mapDefinition, List<MapLayer> mapLayers) {
         this.mapDefinition = mapDefinition;
         this.mapLayers = mapLayers;
@@ -223,7 +225,7 @@ public class Map {
             }
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-                this.renderDebugBodies = !this.renderDebugBodies;
+                //this.renderDebugBodies = !this.renderDebugBodies;
             }
 
             this.waveManager.update();
@@ -241,13 +243,17 @@ public class Map {
             }
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.G)) {
-            this.lose();
-        }
-
         if(this.getPlayer() != null) {
             if(this.getPlayer().getHealth() <= 0) {
                 this.lose();
+            }
+        }
+
+        if(this.won) {
+            this.elapsedSinceWon += 1 * Gdx.graphics.getDeltaTime();
+
+            if(this.elapsedSinceWon >= 5) {
+                this.stateManager.getActiveState().reset();
             }
         }
     }
@@ -366,7 +372,7 @@ public class Map {
 
         Vector2 playerStartPosition = new Vector2(this.getPositionOfFirstTile(TileType.Govern0, 1));
 
-        this.spawnEntity(new EntityPlayer(new Vector2(playerStartPosition.x - 64, playerStartPosition.y - 64), this));
+        this.spawnEntity(new EntityPlayer(new Vector2(playerStartPosition.x - 64, playerStartPosition.y + 48), this));
 
         /**this.spawnEntity(new EntityBat(new Vector2(startPosition), this));
         this.spawnEntity(new EntityZombie(new Vector2(startPosition), this));

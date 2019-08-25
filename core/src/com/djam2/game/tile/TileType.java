@@ -40,7 +40,9 @@ public enum TileType {
 
     Green0(true), Green1(true), Green2(true), Green3(true), Green4(true), Green5(true),
     Green6(true), Green7(true), Green8(true), Green9(true), Green10(true), Green11(true),
-    Green12(true), Green13(true), Green14(true)
+    Green12(true), Green13(true), Green14(true),
+
+    Cycle0(true), Cycle1(true), Tank0(true), Tank1(true), Tank2(true), Tank3(true)
     ;
 
     TileType(String spritePath, boolean solid) {

@@ -20,18 +20,37 @@ public class EntityPlayer extends LivingEntity {
 
     private boolean canFire;
 
+    private int maxHealth = 200;
+
     public EntityPlayer(Vector2 position, Map parentMap) {
         super(position, parentMap, 5, EntityType.PLAYER);
         this.setSpeed(11, 11);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 60);
-        this.setHealth(200);
+        this.setHealth(this.maxHealth);
     }
 
     @Override
     public void update(OrthographicCamera camera) {
         super.update(camera);
         camera.position.set(this.getPosition().x + this.getWidth() / 2, this.getPosition().y + this.getHeight() / 2, 0);
+
+        if(camera.position.x > 635) {
+            camera.position.x = 635;
+        }
+
+        if(camera.position.x < 326) {
+            camera.position.x = 326;
+        }
+
+        if(camera.position.y < 183) {
+            camera.position.y = 183;
+        }
+
+        if(camera.position.y > 776) {
+            camera.position.y = 776;
+        }
+
         camera.update();
 
         this.setCanFire(true);
@@ -84,6 +103,10 @@ public class EntityPlayer extends LivingEntity {
 
     public WeaponBar getWeaponBar() {
         return this.weaponBar;
+    }
+
+    public int getMaxHealth() {
+        return this.maxHealth;
     }
 
 }

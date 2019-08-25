@@ -91,6 +91,24 @@ public class PlayerMindInputState extends EntityMindState {
             targetRotation = 135;
         }
 
+        //
+
+        if(Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            targetRotation = -45;
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            targetRotation = 45;
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            targetRotation = -135;
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            targetRotation = 135;
+        }
+
         if(parentEntity.getRotation() >= targetRotation) {
             parentEntity.setRotation(parentEntity.getRotation() - rotationSpeed);
         }

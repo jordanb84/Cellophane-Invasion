@@ -160,6 +160,12 @@ public class Assets {
         this.loadTexture("tile/green12.png");
         this.loadTexture("tile/green13.png");
         this.loadTexture("tile/green14.png");
+        this.loadTexture("tile/cycle0.png");
+        this.loadTexture("tile/cycle1.png");
+        this.loadTexture("tile/tank0.png");
+        this.loadTexture("tile/tank1.png");
+        this.loadTexture("tile/tank2.png");
+        this.loadTexture("tile/tank3.png");
 
         this.loadTexture("entity/player_up0.png");
         this.loadTexture("entity/player_up1.png");

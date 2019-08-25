@@ -1,6 +1,7 @@
 package com.djam2.game.wave;
 
 import com.badlogic.gdx.math.Vector2;
+import com.djam2.game.entity.living.impl.EntityPlayer;
 import com.djam2.game.map.Map;
 import com.djam2.game.wave.impl.WaveFour;
 import com.djam2.game.wave.impl.WaveOne;
@@ -43,6 +44,17 @@ public class WaveManager {
     public void nextWave() {
         if(this.waveIndex < this.waves.size() - 1) {
             this.waveIndex++;
+
+            EntityPlayer player = this.map.getPlayer();
+
+            if(player.getHealth() < player.getMaxHealth()) {
+                //player.setHealth(player.getHealth() + (player.getHealth() / 5));
+                player.setHealth(player.getHealth() + 10);
+
+                if(player.getHealth() > player.getMaxHealth()) {
+                    player.setHealth(player.getMaxHealth());
+                }
+            }
         } else {
             this.finish();
         }
