@@ -10,6 +10,7 @@ public class EntityBulletBurstBall extends EntityBullet {
     public EntityBulletBurstBall(Vector2 position, Vector2 destination, Map parentMap, float damage, EntityType targetType, float speed, float explosionSize) {
         super(position, destination, parentMap, damage, targetType, speed, explosionSize);
         this.setSprite(Assets.getInstance().getSprite("entity/burstball.png"));
+        this.setLifeMax(4);
     }
 
     @Override
@@ -20,6 +21,8 @@ public class EntityBulletBurstBall extends EntityBullet {
         while(rotation < 360) {
             Vector2 destination = this.getPositionForRotation(rotation, 100);
             EntityBulletBurst bulletBurst = new EntityBulletBurst(new Vector2(this.getPosition()), destination, this.getParentMap(), 100, EntityType.ENEMY, 3.4f, 0.8f);
+
+            bulletBurst.setLifeMax(4);
 
             this.getParentMap().spawnEntity(bulletBurst);
 

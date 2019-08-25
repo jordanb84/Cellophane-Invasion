@@ -10,6 +10,7 @@ public class EntityBulletBurst extends EntityBullet {
     public EntityBulletBurst(Vector2 position, Vector2 destination, Map parentMap, float damage, EntityType targetType, float speed, float explosionSize) {
         super(position, destination, parentMap, damage, targetType, speed, explosionSize);
         this.setSprite(Assets.getInstance().getSprite("entity/burst.png"));
+        this.setLifeMax(4);
     }
 
 }

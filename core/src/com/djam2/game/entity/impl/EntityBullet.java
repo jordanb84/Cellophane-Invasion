@@ -26,6 +26,9 @@ public class EntityBullet extends Entity {
 
     private float explosionSize;
 
+    private float life;
+    private float lifeMax;
+
     public EntityBullet(Vector2 position, Vector2 destination, Map parentMap, float damage, EntityType targetType, float speed, float explosionSize) {
         super(position, parentMap, 2, EntityType.PROJECTILE);
         this.destination = destination;
@@ -42,6 +45,8 @@ public class EntityBullet extends Entity {
         this.targetType = targetType;
 
         this.explosionSize = explosionSize;
+
+        this.setLifeMax(0.8f);
     }
 
     @Override
@@ -73,7 +78,13 @@ public class EntityBullet extends Entity {
             }
         }
 
+        this.life += 1 * Gdx.graphics.getDeltaTime();
+
         if(this.targetType == EntityType.ENEMY) {
+            if(this.life >= this.lifeMax) {
+                this.explode();
+            }
+
             try {
                 EntityEnemy nearestEnemy = this.getParentMap().getNearestEnemy(this.getPosition());
 
@@ -106,6 +117,10 @@ public class EntityBullet extends Entity {
     @Override
     public void updateBody() {
         this.getBodyNoUpdate().set(this.getPosition().x - this.getWidth() / 4, this.getPosition().y - this.getHeight() / 4, this.getWidth() * 1.5f, this.getHeight() * 1.5f);
+    }
+
+    public void setLifeMax(float lifeMax) {
+        this.lifeMax = lifeMax;
     }
 
 }

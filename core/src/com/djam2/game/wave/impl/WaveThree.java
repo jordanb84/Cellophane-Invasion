@@ -23,7 +23,7 @@ public class WaveThree extends Wave {
         }
 
         float batInterval = 5f;
-        for(int addedBats = 0; addedBats < 3; addedBats++) {
+        for(int addedBats = 0; addedBats < 2; addedBats++) {
             this.addEnemy(new EntityBat(new Vector2(startPosition), map), batInterval);
         }
 
