@@ -250,9 +250,11 @@ public class Map {
         }
 
         if(this.won) {
+            //System.out.println("Elapsed " + this.elapsedSinceWon);
             this.elapsedSinceWon += 1 * Gdx.graphics.getDeltaTime();
 
             if(this.elapsedSinceWon >= 5) {
+                System.out.println("RESET");
                 this.stateManager.getActiveState().reset();
             }
         }

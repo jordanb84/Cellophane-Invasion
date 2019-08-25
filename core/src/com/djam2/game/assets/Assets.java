@@ -196,11 +196,13 @@ public class Assets {
         this.loadTexture("entity/burstball.png");
         this.loadTexture("entity/goblin.png");
         this.loadTexture("entity/goblin_blood0.png");
+        this.loadTexture("entity/round.png");
 
         this.loadTexture("weapon/playerbasic.png");
         this.loadTexture("weapon/playerburst.png");
         this.loadTexture("weapon/playerburstball.png");
         this.loadTexture("weapon/selectedweapon.png");
+        this.loadTexture("weapon/playerround.png");
 
         this.loadTexture("arrow.png");
 

@@ -5,10 +5,12 @@ import com.djam2.game.assets.Assets;
 import com.djam2.game.entity.weapon.Weapon;
 import com.djam2.game.entity.weapon.impl.WeaponPlayerBasic;
 import com.djam2.game.entity.weapon.impl.WeaponPlayerBurst;
+import com.djam2.game.entity.weapon.impl.WeaponPlayerRound;
 
 public enum WeaponType {
     PlayerBasic("Primary Torpedo", new WeaponPlayerBasic()),
-    PlayerBurst("Burst Torpedo", new WeaponPlayerBurst())
+    PlayerBurst("Burst Torpedo", new WeaponPlayerBurst()),
+    PlayerRound("Round Torpedo (High Damage)", new WeaponPlayerRound())
     ;
 
     WeaponType(String tooltip, Weapon weapon) {

@@ -23,7 +23,7 @@ public class StateMap extends State {
         MapDefinition mapDefinition = new MapDefinition(3, 60, 60, 16, 16);
         //this.map = new Map(mapDefinition, TileType.Ground);
 
-        this.map = MapImporter.getInstance().getMapFromFile(Gdx.files.internal("map/roads29.map"));
+        this.map = MapImporter.getInstance().getMapFromFile(Gdx.files.internal("map/roads30.map"));
         this.map.setStateManager(this.getManager());
     }
 
@@ -44,7 +44,8 @@ public class StateMap extends State {
 
     @Override
     public void reset() {
-
+        this.map = MapImporter.getInstance().getMapFromFile(Gdx.files.internal("map/roads30.map"));
+        this.map.setStateManager(this.getManager());
     }
 
 }

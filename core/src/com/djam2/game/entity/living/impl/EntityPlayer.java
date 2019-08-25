@@ -20,7 +20,7 @@ public class EntityPlayer extends LivingEntity {
 
     private boolean canFire;
 
-    private int maxHealth = 200;
+    private int maxHealth = 150;
 
     public EntityPlayer(Vector2 position, Map parentMap) {
         super(position, parentMap, 5, EntityType.PLAYER);

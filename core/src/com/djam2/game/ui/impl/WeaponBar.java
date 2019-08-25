@@ -76,6 +76,7 @@ public class WeaponBar extends UiContainer {
 
         this.addWeapon(WeaponType.PlayerBasic, false);
         this.addWeapon(WeaponType.PlayerBurst, false);
+        this.addWeapon(WeaponType.PlayerRound, false);
 
         this.window.setPosition(Gdx.graphics.getWidth() / 2 - informationWidth / 2, 0);
         this.window.setWidth(informationWidth);
@@ -90,6 +91,7 @@ public class WeaponBar extends UiContainer {
 
         this.selectorInputs.put(Input.Keys.NUM_1, 0);
         this.selectorInputs.put(Input.Keys.NUM_2, 1);
+        this.selectorInputs.put(Input.Keys.NUM_3, 2);
 
         //this.informationWindow.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
     }
