@@ -12,15 +12,17 @@ import com.djam2.game.entity.impl.EntityBullet;
 import com.djam2.game.entity.living.LivingEntity;
 import com.djam2.game.entity.mind.EntityMind;
 import com.djam2.game.entity.mind.EntityMindState;
+import com.djam2.game.entity.weapon.Weapon;
+import com.djam2.game.entity.weapon.impl.WeaponPlayerBasic;
 import com.djam2.game.map.Map;
 
 public class PlayerMindInputState extends EntityMindState {
 
-    private float fireInterval = 0.2f;
-    private float elapsedSinceFire;
+    private Weapon weapon;
 
     public PlayerMindInputState(EntityMind parentMind) {
         super(parentMind, "input");
+        this.weapon = new WeaponPlayerBasic();
     }
 
     @Override
@@ -30,6 +32,8 @@ public class PlayerMindInputState extends EntityMindState {
 
     @Override
     public void update(OrthographicCamera camera, LivingEntity parentEntity) {
+        this.weapon.update();
+
         float rotationSpeed = 700 * Gdx.graphics.getDeltaTime();
 
         float targetRotation = parentEntity.getRotation();
@@ -103,26 +107,16 @@ public class PlayerMindInputState extends EntityMindState {
         //System.out.println(parentEntity.getRotation() + " direction " + parentEntity.getDirection().name() + " Target rotation " + targetRotation);
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-            if(this.elapsedSinceFire >= this.fireInterval) {
-                this.fireBullet(camera);
-            }
+            this.fireBullet(camera);
         }
 
-        this.elapsedSinceFire += 1 * Gdx.graphics.getDeltaTime();
     }
 
     private void fireBullet(OrthographicCamera camera) {
         Vector3 mousePosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(mousePosition);
 
-        Vector2 bulletDestination = new Vector2(mousePosition.x, mousePosition.y);
-
-        float damage = 35;
-        EntityBullet bullet = new EntityBullet(new Vector2(this.getParentEntity().getPosition()), bulletDestination, this.getParentMap(), damage, EntityType.ENEMY, 3.2f, 0.8f);
-
-        this.getParentMap().spawnEntity(bullet);
-
-        this.elapsedSinceFire = 0;
+        this.weapon.attemptFire(new Vector2(this.getParentEntity().getPosition()), new Vector2(mousePosition.x, mousePosition.y), this.getParentMap());
     }
 
     @Override

@@ -16,9 +16,11 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.djam2.game.entity.Entity;
+import com.djam2.game.entity.living.EntityEnemy;
 import com.djam2.game.entity.living.impl.EntityBat;
 import com.djam2.game.entity.living.impl.EntityPlayer;
 import com.djam2.game.entity.living.impl.EntityZombie;
+import com.djam2.game.state.StateManager;
 import com.djam2.game.tile.TileType;
 import com.djam2.game.tile.pathfinding.ManhattanHeuristic;
 import com.djam2.game.tile.pathfinding.TileGraph;
@@ -60,6 +62,11 @@ public class Map {
 
     private EntityPlayer player;
 
+    private Vector2 startPosition;
+    private Vector2 endPosition;
+
+    private StateManager stateManager;
+
     public Map(MapDefinition mapDefinition, List<MapLayer> mapLayers) {
         this.mapDefinition = mapDefinition;
         this.mapLayers = mapLayers;
@@ -100,12 +107,19 @@ public class Map {
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
+        System.out.println("distance: " + this.getLowestDistanceFromBase());
         for(MapLayer mapLayer : this.mapLayers) {
             mapLayer.render(this, batch, camera);
         }
 
         for(Entity entity : this.getEntities()) {
-            entity.render(batch, camera);
+            if(!(entity instanceof EntityPlayer)) {
+                entity.render(batch, camera);
+            }
+        }
+
+        if(this.getPlayer() != null) {
+            this.getPlayer().render(batch, camera);
         }
 
         if(this.renderDebugBodies) {
@@ -255,8 +269,25 @@ public class Map {
         }
     }
 
+    public float getLowestDistanceFromBase() {
+        float lowestDistance = this.startPosition.dst(this.endPosition);
+
+        for(Entity entity : this.getEntities()) {
+            if(entity instanceof EntityEnemy) {
+                float distance = this.endPosition.dst(entity.getPosition());
+
+                if(distance < lowestDistance) {
+                    lowestDistance = distance;
+                }
+            }
+        }
+
+        return lowestDistance;
+    }
+
     private void spawnInitialEntities() {
-        Vector2 startPosition = this.getPositionOfFirstTile(TileType.Start, 1);
+        this.startPosition = this.getPositionOfFirstTile(TileType.Start, 1);
+        this.endPosition = this.getPositionOfFirstTile(TileType.End, 1);
 
         this.spawnEntity(new EntityPlayer(new Vector2(startPosition.x - 64, startPosition.y - 64), this));
 
@@ -380,6 +411,10 @@ public class Map {
 
     public void setPlayer(EntityPlayer player) {
         this.player = player;
+    }
+
+    public void resize(int width, int height) {
+        this.player.resize(width, height);
     }
 
 }

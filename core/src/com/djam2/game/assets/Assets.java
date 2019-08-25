@@ -3,6 +3,7 @@ package com.djam2.game.assets;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
 
@@ -183,6 +184,17 @@ public class Assets {
         this.loadTexture("entity/bat_blood0.png");
         this.loadTexture("entity/zombie.png");
         this.loadTexture("entity/zombie_blood0.png");
+        this.loadTexture("entity/burst.png");
+        this.loadTexture("entity/burstball.png");
+
+        this.loadTexture("weapon/playerbasic.png");
+        this.loadTexture("weapon/playerburst.png");
+        this.loadTexture("weapon/playerburstball.png");
+        this.loadTexture("weapon/selectedweapon.png");
+
+        this.loadSkin("skin/sgxui/sgx-ui.json");
+        this.loadSkin("skin/arcade/arcade-ui.json");
+        this.loadSkin("skin/clean-crispy/clean-crispy-ui.json");
 
         this.load();
     }
@@ -201,6 +213,14 @@ public class Assets {
 
     public Sprite getSprite(String path) {
         return new Sprite(this.getTexture(path));
+    }
+
+    public void loadSkin(String path) {
+        this.assetManager.load(path, Skin.class);
+    }
+
+    public Skin getSkin(String path) {
+        return this.assetManager.get(path, Skin.class);
     }
 
     public static Assets getInstance() {

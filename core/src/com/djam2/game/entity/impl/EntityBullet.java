@@ -84,7 +84,7 @@ public class EntityBullet extends Entity {
         this.explode();
     }
 
-    private void explode() {
+    public void explode() {
         this.getParentMap().despawnEntity(this);
         this.getParentMap().spawnEntity(new EntityExplosion(new Vector2(this.getPosition()), this.getParentMap(), this.getRotation(), this.explosionSize));
     }

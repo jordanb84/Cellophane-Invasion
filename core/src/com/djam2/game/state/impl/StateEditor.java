@@ -260,7 +260,7 @@ public class StateEditor extends State {
 
     @Override
     public void resize(int width, int height) {
-
+        this.map.resize(width, height);
     }
 
     public void updateTitle() {

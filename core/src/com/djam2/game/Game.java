@@ -22,7 +22,7 @@ public class Game extends ApplicationAdapter {
 		this.batch = new SpriteBatch();
 
 		this.camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.setToOrtho(false, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
 
 		this.stateManager = new StateManager();
 		//this.stateManager.registerState("map", new StateMap(this.stateManager));
@@ -47,4 +47,11 @@ public class Game extends ApplicationAdapter {
 	public void dispose () {
 
 	}
+
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		this.stateManager.resizeActiveState(width, height);
+	}
+
 }

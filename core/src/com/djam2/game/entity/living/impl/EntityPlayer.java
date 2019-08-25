@@ -2,6 +2,7 @@ package com.djam2.game.entity.living.impl;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.animation.Animation;
 import com.djam2.game.animation.DirectionalAnimation;
@@ -9,15 +10,20 @@ import com.djam2.game.entity.EntityType;
 import com.djam2.game.entity.living.LivingEntity;
 import com.djam2.game.entity.mind.EntityMind;
 import com.djam2.game.entity.mind.impl.PlayerMind;
+import com.djam2.game.entity.weapon.Weapon;
 import com.djam2.game.map.Map;
+import com.djam2.game.ui.impl.WeaponBar;
 
 public class EntityPlayer extends LivingEntity {
+
+    private WeaponBar weaponBar;
 
     public EntityPlayer(Vector2 position, Map parentMap) {
         super(position, parentMap, 5, EntityType.PLAYER);
         this.setSpeed(11, 11);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 60);
+        this.weaponBar = new WeaponBar();
     }
 
     @Override
@@ -25,6 +31,14 @@ public class EntityPlayer extends LivingEntity {
         super.update(camera);
         camera.position.set(this.getPosition().x + this.getWidth() / 2, this.getPosition().y + this.getHeight() / 2, 0);
         camera.update();
+
+        this.weaponBar.update(camera);
+    }
+
+    @Override
+    public void render(SpriteBatch batch, OrthographicCamera camera) {
+        super.render(batch, camera);
+        this.weaponBar.render(batch);
     }
 
     @Override
@@ -51,6 +65,10 @@ public class EntityPlayer extends LivingEntity {
     @Override
     public EntityMind setupMind() {
         return new PlayerMind(this);
+    }
+
+    public void resize(int width, int height) {
+        this.weaponBar.resize(width, height);
     }
 
 }
