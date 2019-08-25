@@ -1,6 +1,7 @@
 package com.djam2.game.entity.living.impl;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.animation.Animation;
 import com.djam2.game.animation.DirectionalAnimation;
@@ -17,6 +18,13 @@ public class EntityPlayer extends LivingEntity {
         this.setSpeed(11, 11);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 60);
+    }
+
+    @Override
+    public void update(OrthographicCamera camera) {
+        super.update(camera);
+        camera.position.set(this.getPosition().x + this.getWidth() / 2, this.getPosition().y + this.getHeight() / 2, 0);
+        camera.update();
     }
 
     @Override

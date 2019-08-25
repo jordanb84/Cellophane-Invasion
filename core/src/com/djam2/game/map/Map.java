@@ -46,7 +46,7 @@ public class Map {
 
     private ShapeRenderer shapeRenderer;
 
-    private boolean renderDebugBodies = true;
+    private boolean renderDebugBodies = false;
 
     private IndexedAStarPathFinder pathFinder;
     private ManhattanHeuristic heuristic = new ManhattanHeuristic();

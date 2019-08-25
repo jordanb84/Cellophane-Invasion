@@ -118,7 +118,7 @@ public class PlayerMindInputState extends EntityMindState {
         Vector2 bulletDestination = new Vector2(mousePosition.x, mousePosition.y);
 
         float damage = 35;
-        EntityBullet bullet = new EntityBullet(new Vector2(this.getParentEntity().getPosition()), bulletDestination, this.getParentMap(), damage, EntityType.ENEMY, 3.2f, 1f);
+        EntityBullet bullet = new EntityBullet(new Vector2(this.getParentEntity().getPosition()), bulletDestination, this.getParentMap(), damage, EntityType.ENEMY, 3.2f, 0.8f);
 
         this.getParentMap().spawnEntity(bullet);
 
