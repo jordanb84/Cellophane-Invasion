@@ -359,6 +359,13 @@ public abstract class Entity {
         }
     }
 
+    public Vector2 getPositionForRotation(float rotation, float distance) {
+        float xRotationMovement = -distance * (float) Math.cos(Math.toRadians(rotation - 90));
+        float yRotationMovement = -distance * (float) Math.sin(Math.toRadians(rotation - 90));
+
+        return new Vector2(this.getPosition().x + xRotationMovement, this.getPosition().y + yRotationMovement);
+    }
+
     public void moveAlongCurrentRotation() {
         this.moveAlongRotation(this.getRotation());
     }

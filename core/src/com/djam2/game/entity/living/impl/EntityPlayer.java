@@ -23,7 +23,6 @@ public class EntityPlayer extends LivingEntity {
         this.setSpeed(11, 11);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 60);
-        this.weaponBar = new WeaponBar();
     }
 
     @Override
@@ -64,7 +63,8 @@ public class EntityPlayer extends LivingEntity {
 
     @Override
     public EntityMind setupMind() {
-        return new PlayerMind(this);
+        this.weaponBar = new WeaponBar();
+        return new PlayerMind(this, this.weaponBar);
     }
 
     public void resize(int width, int height) {

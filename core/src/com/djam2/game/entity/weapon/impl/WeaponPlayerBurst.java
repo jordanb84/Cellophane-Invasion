@@ -16,7 +16,7 @@ public class WeaponPlayerBurst extends Weapon {
     @Override
     public void fire(Vector2 position, Vector2 destination, Map parentMap) {
         float damage = 15;
-        EntityBulletBurstBall bullet = new EntityBulletBurstBall(position, destination, parentMap, damage, EntityType.ENEMY, 2.8f, 0.4f);
+        EntityBulletBurstBall bullet = new EntityBulletBurstBall(position, destination, parentMap, damage, EntityType.ENEMY, 3f, 0.4f);
 
         parentMap.spawnEntity(bullet);
     }

@@ -15,14 +15,16 @@ import com.djam2.game.entity.mind.EntityMindState;
 import com.djam2.game.entity.weapon.Weapon;
 import com.djam2.game.entity.weapon.impl.WeaponPlayerBasic;
 import com.djam2.game.map.Map;
+import com.djam2.game.ui.impl.WeaponBar;
 
 public class PlayerMindInputState extends EntityMindState {
 
-    private Weapon weapon;
+    private WeaponBar weaponBar;
 
-    public PlayerMindInputState(EntityMind parentMind) {
+    public PlayerMindInputState(EntityMind parentMind, WeaponBar weaponBar) {
         super(parentMind, "input");
-        this.weapon = new WeaponPlayerBasic();
+        this.weaponBar = weaponBar;
+        System.out.println("Weapon bar is " + weaponBar);
     }
 
     @Override
@@ -32,7 +34,7 @@ public class PlayerMindInputState extends EntityMindState {
 
     @Override
     public void update(OrthographicCamera camera, LivingEntity parentEntity) {
-        this.weapon.update();
+        this.getWeapon().update();
 
         float rotationSpeed = 700 * Gdx.graphics.getDeltaTime();
 
@@ -116,12 +118,16 @@ public class PlayerMindInputState extends EntityMindState {
         Vector3 mousePosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(mousePosition);
 
-        this.weapon.attemptFire(new Vector2(this.getParentEntity().getPosition()), new Vector2(mousePosition.x, mousePosition.y), this.getParentMap());
+        this.getWeapon().attemptFire(new Vector2(this.getParentEntity().getPosition()), new Vector2(mousePosition.x, mousePosition.y), this.getParentMap());
     }
 
     @Override
     public void onCollision(Direction collisionDirection, Vector2 collisionPosition) {
 
+    }
+
+    public Weapon getWeapon() {
+        return this.weaponBar.getSelectedWeapon();
     }
 
 }
