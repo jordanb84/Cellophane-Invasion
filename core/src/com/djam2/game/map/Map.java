@@ -8,6 +8,7 @@ import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.djam2.game.assets.Assets;
 import com.djam2.game.entity.Entity;
 import com.djam2.game.entity.living.EntityEnemy;
 import com.djam2.game.entity.living.impl.EntityBat;
@@ -72,6 +74,8 @@ public class Map {
 
     private boolean won;
 
+    private Sprite arrowSprite;
+
     public Map(MapDefinition mapDefinition, List<MapLayer> mapLayers) {
         this.mapDefinition = mapDefinition;
         this.mapLayers = mapLayers;
@@ -111,6 +115,8 @@ public class Map {
         this.shapeRenderer.setAutoShapeType(true);
 
         this.waveManager = new WaveManager(new Vector2(this.startPosition), this);
+
+        this.arrowSprite = Assets.getInstance().getSprite("arrow.png");
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
@@ -148,6 +154,9 @@ public class Map {
                 mapLayer.renderDebugBodies(this.shapeRenderer);
             }
 
+            this.shapeRenderer.setColor(Color.GREEN);
+            this.shapeRenderer.rect(camera.position.x - camera.viewportWidth, camera.position.y - camera.viewportHeight, camera.viewportWidth / 2, camera.viewportHeight / 2);
+
             this.shapeRenderer.end();
             batch.begin();
         }
@@ -160,6 +169,31 @@ public class Map {
 
         if(this.getPlayer() != null) {
             this.getPlayer().getWeaponBar().render(batch);
+        }
+
+        boolean drawArrow = true;
+
+        try {
+            //System.out.println("Within sight: " + this.enemyWithinSight(camera));
+            if (!this.enemyWithinSight(camera) || drawArrow) {
+                EntityEnemy nearestEnemy = this.getNearestEnemy();
+
+                System.out.println("No enemies within sight!");
+
+                this.arrowSprite.setAlpha(0.6f);
+               // Vector2 spritePosition = new Vector2(camera.position.x - camera.viewportWidth / 2, camera.position.y);
+                Vector2 spritePosition = new Vector2(player.getPosition().x - this.getPlayer().getWidth() / 2, player.getPosition().y - this.arrowSprite.getHeight() / 2 + 100);
+
+                //System.out.println("Drawing at " + spritePosition.x + "/" + spritePosition.y);
+
+                double rotation = this.getRotationTowardPosition(nearestEnemy.getPosition(), this.getPlayer().getPosition());
+
+                this.arrowSprite.setRotation((float) rotation);
+                this.arrowSprite.setPosition(spritePosition.x, spritePosition.y);
+                this.arrowSprite.draw(batch);
+            }
+        } catch(IndexOutOfBoundsException noEnemies) {
+
         }
     }
 
@@ -455,6 +489,58 @@ public class Map {
     public void win() {
         this.won = true;
         this.getPlayer().getWeaponBar().displayWinMessage();
+    }
+
+    public boolean enemyWithinSight(OrthographicCamera camera) {
+        Rectangle cameraBody = new Rectangle(camera.position.x - camera.viewportWidth, camera.position.y - camera.viewportHeight, camera.viewportWidth / 2, camera.viewportHeight / 2);
+
+        for(Entity entity : this.getEntities()) {
+            if(entity instanceof EntityEnemy) {
+                if(cameraBody.overlaps(entity.getBody())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public EntityEnemy getNearestEnemy() {
+        Vector2 playerPosition = this.getPlayer().getPosition();
+
+        List<EntityEnemy> enemies = this.getEnemies();
+
+        EntityEnemy closestEnemy = enemies.get(0);
+
+        for(EntityEnemy enemy : enemies) {
+            if(enemy.getPosition().dst(playerPosition) < closestEnemy.getPosition().dst(playerPosition)) {
+                closestEnemy = enemy;
+            }
+        }
+
+        return closestEnemy;
+    }
+
+    public List<EntityEnemy> getEnemies() {
+        List<EntityEnemy> enemies = new ArrayList<>();
+
+        for(Entity entity : this.getEntities()) {
+            if(entity instanceof EntityEnemy) {
+                enemies.add(((EntityEnemy) entity));
+            }
+        }
+
+        return enemies;
+    }
+
+    public double getRotationTowardPosition(Vector2 position, Vector2 sourcePosition) {
+        double angle = Math.atan2(position.y - sourcePosition.y, position.x - sourcePosition.x);
+
+        angle = angle * (180 / Math.PI);
+
+        angle -= 90;
+
+        return angle;
     }
 
 }

@@ -14,7 +14,7 @@ public class SolidConnection<N> implements Connection<N> {
 
     @Override
     public float getCost() {
-        return 100;
+        return 5000;
     }
 
     @Override

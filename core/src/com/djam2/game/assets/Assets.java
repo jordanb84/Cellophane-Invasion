@@ -192,6 +192,8 @@ public class Assets {
         this.loadTexture("weapon/playerburstball.png");
         this.loadTexture("weapon/selectedweapon.png");
 
+        this.loadTexture("arrow.png");
+
         this.loadSkin("skin/sgxui/sgx-ui.json");
         this.loadSkin("skin/arcade/arcade-ui.json");
         this.loadSkin("skin/clean-crispy/clean-crispy-ui.json");

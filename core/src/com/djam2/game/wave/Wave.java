@@ -43,7 +43,7 @@ public abstract class Wave {
                 map.spawnEntity(enemy);
 
                 this.enemyIndex++;
-                
+
                 this.elapsedSinceLastEnemy = 0;
             }
         }
