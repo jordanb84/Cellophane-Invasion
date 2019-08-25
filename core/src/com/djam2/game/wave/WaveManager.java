@@ -3,6 +3,7 @@ package com.djam2.game.wave;
 import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.map.Map;
 import com.djam2.game.wave.impl.WaveOne;
+import com.djam2.game.wave.impl.WaveTwo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,20 +25,19 @@ public class WaveManager {
 
     private void setupWaves(Vector2 startPosition, Map map) {
         this.waves.add(new WaveOne(startPosition, map, this));
+        this.waves.add(new WaveTwo(startPosition, map, this));
     }
 
     public void update() {
         if(!this.finished) {
-            for (Wave wave : this.waves) {
-                wave.update(this.map);
-            }
+            this.waves.get(this.waveIndex).update(this.map);
         }
 
         //System.out.println("WAVE " + this.waveIndex);
     }
 
     public void nextWave() {
-        if(this.waveIndex < this.waves.size()) {
+        if(this.waveIndex < this.waves.size() - 1) {
             this.waveIndex++;
         } else {
             this.finish();
@@ -54,6 +54,10 @@ public class WaveManager {
 
     public int getTotalWaves() {
         return this.waves.size();
+    }
+
+    public boolean isFinished() {
+        return this.finished;
     }
 
 }

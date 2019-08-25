@@ -25,7 +25,7 @@ public class EntityPlayer extends LivingEntity {
         this.setSpeed(11, 11);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 60);
-        this.setHealth(100);
+        this.setHealth(1000);
     }
 
     @Override

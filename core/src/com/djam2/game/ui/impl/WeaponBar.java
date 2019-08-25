@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -38,6 +39,8 @@ public class WeaponBar extends UiContainer {
     private Label spaceLabel;
     private Label waveLabel;
 
+    private Vector2 centerPosition;
+
     public WeaponBar(EntityPlayer player) {
         super(SkinType.Sgx.SKIN, null);
         this.player = player;
@@ -45,6 +48,8 @@ public class WeaponBar extends UiContainer {
 
     @Override
     public void create() {
+        this.centerPosition = new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+
         this.informationWindow = new Window("Status", this.getDefaultSkin());
 
         this.waveLabel = new Label("Wave: ", SkinType.Arcade.SKIN);
@@ -101,6 +106,25 @@ public class WeaponBar extends UiContainer {
 
         int humanWave = map.getWave() + 1;
         this.waveLabel.setText("Wave: " + humanWave + "/" + map.getTotalWaves());
+    }
+
+    public void displayWinMessage() {
+        Window wonWindow = new Window("You've won!", this.getDefaultSkin());
+
+        int wonWidth = 400;
+        int wonHeight = 200;
+
+        wonWindow.setSize(wonWidth, wonHeight);
+
+        //Label wonLabel = new Label("Congratulations! You've fought off all waves of enemies and stopped them from overtaking your house", SkinType.Arcade.SKIN);
+        Label wonLabel = new Label("Congratulations!", SkinType.Arcade.SKIN);
+
+        //wonLabel.setWrap(true);
+
+        wonWindow.add(wonLabel).fill();
+
+        wonWindow.setPosition(this.centerPosition.x - wonWidth / 2, this.centerPosition.y - wonHeight / 2);
+        this.getRootTable().addActor(wonWindow);
     }
 
     private void addWeapon(WeaponType weaponType, boolean pad) {

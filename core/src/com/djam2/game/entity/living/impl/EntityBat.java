@@ -21,7 +21,7 @@ public class EntityBat extends EntityEnemy {
         this.setSpeed(8, 8);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 40); //TODO cyan maybe?
-        this.setHealth(1000);
+        this.setHealth(150);
     }
 
     @Override

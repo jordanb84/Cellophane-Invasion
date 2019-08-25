@@ -70,6 +70,8 @@ public class Map {
 
     private WaveManager waveManager;
 
+    private boolean won;
+
     public Map(MapDefinition mapDefinition, List<MapLayer> mapLayers) {
         this.mapDefinition = mapDefinition;
         this.mapLayers = mapLayers;
@@ -184,6 +186,10 @@ public class Map {
         }
 
         this.waveManager.update();
+
+        if(this.waveManager.isFinished() && this.getEnemyCount() == 0 && !this.won) {
+            this.win();
+        }
     }
 
     private TileNode[][] collisionLayerNodes;
@@ -444,6 +450,11 @@ public class Map {
 
     public int getTotalWaves() {
         return this.waveManager.getTotalWaves();
+    }
+
+    public void win() {
+        this.won = true;
+        this.getPlayer().getWeaponBar().displayWinMessage();
     }
 
 }
