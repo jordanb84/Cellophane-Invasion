@@ -25,6 +25,7 @@ import com.djam2.game.tile.TileType;
 import com.djam2.game.tile.pathfinding.ManhattanHeuristic;
 import com.djam2.game.tile.pathfinding.TileGraph;
 import com.djam2.game.tile.pathfinding.TileNode;
+import com.djam2.game.wave.WaveManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,8 @@ public class Map {
 
     private StateManager stateManager;
 
+    private WaveManager waveManager;
+
     public Map(MapDefinition mapDefinition, List<MapLayer> mapLayers) {
         this.mapDefinition = mapDefinition;
         this.mapLayers = mapLayers;
@@ -104,10 +107,11 @@ public class Map {
 
         this.shapeRenderer = new ShapeRenderer();
         this.shapeRenderer.setAutoShapeType(true);
+
+        this.waveManager = new WaveManager(new Vector2(this.startPosition), this);
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
-        System.out.println("distance: " + this.getLowestDistanceFromBase());
         for(MapLayer mapLayer : this.mapLayers) {
             mapLayer.render(this, batch, camera);
         }
@@ -179,6 +183,7 @@ public class Map {
             this.renderDebugBodies = !this.renderDebugBodies;
         }
 
+        this.waveManager.update();
     }
 
     private TileNode[][] collisionLayerNodes;
@@ -295,14 +300,14 @@ public class Map {
 
         this.spawnEntity(new EntityPlayer(new Vector2(startPosition.x - 64, startPosition.y - 64), this));
 
-        this.spawnEntity(new EntityBat(new Vector2(startPosition), this));
+        /**this.spawnEntity(new EntityBat(new Vector2(startPosition), this));
         this.spawnEntity(new EntityZombie(new Vector2(startPosition), this));
 
         Random batPositionRandom = new Random();
 
         for(int bats = 0; bats < 15; bats++) {
             //this.spawnEntity(new EntityBat(new Vector2(batPositionRandom.nextInt(200), batPositionRandom.nextInt(200)), this));
-        }
+        }**/
     }
 
     public Vector2 getPositionOfFirstTile(TileType tileType, int layer) {
@@ -419,6 +424,26 @@ public class Map {
 
     public void resize(int width, int height) {
         this.player.resize(width, height);
+    }
+
+    public int getEnemyCount() {
+        int enemyCount = 0;
+
+        for(Entity entity : this.getEntities()) {
+            if(entity instanceof EntityEnemy) {
+                enemyCount++;
+            }
+        }
+
+        return enemyCount;
+    }
+
+    public int getWave() {
+        return this.waveManager.getWave();
+    }
+
+    public int getTotalWaves() {
+        return this.waveManager.getTotalWaves();
     }
 
 }

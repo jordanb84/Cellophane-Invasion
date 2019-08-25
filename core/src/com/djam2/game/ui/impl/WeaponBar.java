@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.djam2.game.entity.living.impl.EntityPlayer;
 import com.djam2.game.entity.weapon.Weapon;
+import com.djam2.game.map.Map;
 import com.djam2.game.state.StateManager;
 import com.djam2.game.ui.SkinType;
 import com.djam2.game.ui.UiContainer;
@@ -33,6 +34,10 @@ public class WeaponBar extends UiContainer {
 
     private Window informationWindow;
 
+    private Label enemiesLabel;
+    private Label spaceLabel;
+    private Label waveLabel;
+
     public WeaponBar(EntityPlayer player) {
         super(SkinType.Sgx.SKIN, null);
         this.player = player;
@@ -42,34 +47,26 @@ public class WeaponBar extends UiContainer {
     public void create() {
         this.informationWindow = new Window("Status", this.getDefaultSkin());
 
-        this.informationWindow.add(new Label("Enemies: 13", SkinType.Arcade.SKIN));
+        this.waveLabel = new Label("Wave: ", SkinType.Arcade.SKIN);
+        this.informationWindow.add(this.waveLabel);
         this.informationWindow.row();
-        this.informationWindow.add(new Label("Space: 463", SkinType.Arcade.SKIN));
+        this.enemiesLabel = new Label("Enemies: ", SkinType.Arcade.SKIN);
+        this.informationWindow.add(this.enemiesLabel);
+        this.informationWindow.row();
+        this.spaceLabel = new Label("Space: ", SkinType.Arcade.SKIN);
+        this.informationWindow.add(this.spaceLabel);
 
         int informationWidth = 280;
-        int informationHeight = 100;
+        int informationHeight = 140;
         this.informationWindow.setSize(informationWidth, informationHeight);
-
-        //this.getRootTable().row();
-        //this.getRootTable().row().padBottom(40);
 
         this.window = new Window("Weapons", this.getDefaultSkin());
 
         this.weaponSlots = new ArrayList<WeaponSlot>();
         this.weapons = new ArrayList<Weapon>();
 
-        //this.informationWindow.top();
-        //this.window.top();
-
         this.addWeapon(WeaponType.PlayerBasic, false);
         this.addWeapon(WeaponType.PlayerBurst, false);
-
-        //this.getRootTable().row();
-        //this.getRootTable().add(new Label("Weapons", SkinType.Arcade.SKIN));
-
-        //this.getRootTable().center().bottom().add(this.window).fill();
-        //this.getRootTable().row();
-        //this.getRootTable().add(this.informationWindow);
 
         this.window.setPosition(Gdx.graphics.getWidth() / 2 - informationWidth / 2, 0);
         this.window.setWidth(informationWidth);
@@ -96,6 +93,14 @@ public class WeaponBar extends UiContainer {
                 this.setSelectedWeapon(selector.getValue());
             }
         }
+
+        Map map = this.getPlayer().getParentMap();
+
+        this.enemiesLabel.setText("Enemies: " + map.getEnemyCount());
+        this.spaceLabel.setText("Space: " + (int) map.getLowestDistanceFromBase());
+
+        int humanWave = map.getWave() + 1;
+        this.waveLabel.setText("Wave: " + humanWave + "/" + map.getTotalWaves());
     }
 
     private void addWeapon(WeaponType weaponType, boolean pad) {
