@@ -3,6 +3,7 @@ package com.djam2.game.map;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.graphics.Color;
@@ -45,7 +46,7 @@ public class Map {
 
     private ShapeRenderer shapeRenderer;
 
-    private boolean renderDebugBodies = false;
+    private boolean renderDebugBodies = true;
 
     private IndexedAStarPathFinder pathFinder;
     private ManhattanHeuristic heuristic = new ManhattanHeuristic();
@@ -148,6 +149,11 @@ public class Map {
             entity.update(camera);
             this.applyEntityFriction(entity);
         }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            this.renderDebugBodies = !this.renderDebugBodies;
+        }
+
     }
 
     private TileNode[][] collisionLayerNodes;
@@ -243,15 +249,33 @@ public class Map {
     }
 
     private void spawnInitialEntities() {
-        this.spawnEntity(new EntityPlayer(new Vector2(128, 128), this));
+        Vector2 startPosition = this.getPositionOfFirstTile(TileType.Start, 1);
 
-        this.spawnEntity(new EntityBat(new Vector2(64, 64), this));
+        this.spawnEntity(new EntityPlayer(new Vector2(startPosition.x + 64, startPosition.y + 64), this));
+
+        this.spawnEntity(new EntityBat(startPosition, this));
 
         Random batPositionRandom = new Random();
 
         for(int bats = 0; bats < 15; bats++) {
             //this.spawnEntity(new EntityBat(new Vector2(batPositionRandom.nextInt(200), batPositionRandom.nextInt(200)), this));
         }
+    }
+
+    public Vector2 getPositionOfFirstTile(TileType tileType, int layer) {
+        MapLayer mapLayer = this.getMapLayer(layer);
+
+        for(int row = 0; row < this.getMapDefinition().getMapHeight(); row++) {
+            for(int column = 0; column < this.getMapDefinition().getMapWidth(); column++) {
+                int index = row * this.getMapDefinition().getMapWidth() + column;
+
+                if(mapLayer.getLayerTiles().get(index) == tileType) {
+                    return new Vector2(column * this.getMapDefinition().getTileWidth(), row * this.getMapDefinition().getTileHeight());
+                }
+            }
+        }
+
+        return new Vector2(128, 128);
     }
 
     private void setupPhysicsWorld() {

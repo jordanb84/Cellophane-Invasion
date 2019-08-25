@@ -27,7 +27,7 @@ public class TileNode {
 
     public void addAdjacentTile(TileNode node) {
         if(node != null) {
-            if(node.isSolid()) {
+            if(node.isSolid() || node.tileType == TileType.PathBlock) {
                 this.connections.add(new SolidConnection<TileNode>(this, node));
             } else {
                 this.connections.add(new DefaultConnection<TileNode>(this, node));

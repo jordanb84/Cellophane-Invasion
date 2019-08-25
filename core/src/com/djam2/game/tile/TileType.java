@@ -21,7 +21,9 @@ public enum TileType {
     StoneWall4(true), StoneWall5(true), StoneWall6(true), StoneWall7(true),
     StoneWall8(true),
 
-    Grave0(true), Grave1(true)
+    Grave0(true), Grave1(true), Gas0(true), Gas1(true), Gas2(true), Fire(true),
+
+    PathBlock
     ;
 
     TileType(String spritePath, boolean solid) {

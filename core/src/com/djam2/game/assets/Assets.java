@@ -91,6 +91,11 @@ public class Assets {
         this.loadTexture("tile/stonewall8.png");
         this.loadTexture("tile/grave0.png");
         this.loadTexture("tile/grave1.png");
+        this.loadTexture("tile/gas0.png");
+        this.loadTexture("tile/gas1.png");
+        this.loadTexture("tile/gas2.png");
+        this.loadTexture("tile/fire.png");
+        this.loadTexture("tile/pathblock.png");
 
         this.loadTexture("entity/player_up0.png");
         this.loadTexture("entity/player_up1.png");

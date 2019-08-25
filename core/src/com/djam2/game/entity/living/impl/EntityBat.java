@@ -18,7 +18,7 @@ public class EntityBat extends EntityEnemy {
 
     public EntityBat(Vector2 position, Map parentMap) {
         super(position, parentMap, 6);
-        this.setSpeed(3, 3);
+        this.setSpeed(8, 8);
         this.addPhysicsBody();
         this.addLight(Color.WHITE, 40); //TODO cyan maybe?
         this.setHealth(1000);

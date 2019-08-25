@@ -53,8 +53,9 @@ public class StateEditor extends State {
         this.testingCamera = new OrthographicCamera();
         this.testingCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        MapDefinition mapDefinition = new MapDefinition(3, 20, 20, 16, 16);
-        this.map = new Map(mapDefinition, TileType.Ground);
+        MapDefinition mapDefinition = new MapDefinition(3, 60, 60, 16, 16);
+        //this.map = new Map(mapDefinition, TileType.Ground);
+        this.map = MapImporter.getInstance().getMapFromFile(Gdx.files.internal("map/roads9.map"));
 
         this.overlaySprite = Assets.getInstance().getSprite("tile/overlay.png");
     }
@@ -166,7 +167,7 @@ public class StateEditor extends State {
                 }
             }
 
-            float speed = 60;
+            float speed = 100;
             float delta = Gdx.graphics.getDeltaTime();
 
             if(Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -186,6 +187,25 @@ public class StateEditor extends State {
             }
 
             camera.update();
+
+            MapDefinition mapDefinition = this.map.getMapDefinition();
+
+            int index = 0;
+            for(int row = 0; row < mapDefinition.getMapHeight(); row++) {
+                for(int column = 0; column < mapDefinition.getMapWidth(); column++) {
+                    TileType tileType = this.map.getMapLayer(this.editingLayerIndex).getLayerTiles().get(index);
+
+                    Vector2 position = new Vector2(column * mapDefinition.getTileWidth(), row * mapDefinition.getTileHeight());
+
+                    if(this.mouseBody.overlaps(tileType.TILE.getBody(position))) {
+                        if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
+                            this.placingTile = tileType;
+                        }
+                    }
+
+                    index++;
+                }
+            }
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.T)) {

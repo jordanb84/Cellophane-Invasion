@@ -20,7 +20,7 @@ public class StateMap extends State {
 
     @Override
     public void create() {
-        MapDefinition mapDefinition = new MapDefinition(3, 20, 20, 16, 16);
+        MapDefinition mapDefinition = new MapDefinition(3, 60, 60, 16, 16);
         //this.map = new Map(mapDefinition, TileType.Ground);
 
         this.map = MapImporter.getInstance().getMapFromFile(Gdx.files.internal("map/path.map"));

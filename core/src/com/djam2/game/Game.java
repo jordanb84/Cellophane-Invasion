@@ -25,7 +25,7 @@ public class Game extends ApplicationAdapter {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		this.stateManager = new StateManager();
-		this.stateManager.registerState("map", new StateMap(this.stateManager));
+		//this.stateManager.registerState("map", new StateMap(this.stateManager));
 		this.stateManager.registerState("editor", new StateEditor(this.stateManager));
 		this.stateManager.setActiveState("editor");
 	}
