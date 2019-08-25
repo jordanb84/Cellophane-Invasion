@@ -2,7 +2,9 @@ package com.djam2.game.wave;
 
 import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.map.Map;
+import com.djam2.game.wave.impl.WaveFour;
 import com.djam2.game.wave.impl.WaveOne;
+import com.djam2.game.wave.impl.WaveThree;
 import com.djam2.game.wave.impl.WaveTwo;
 
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ public class WaveManager {
     private void setupWaves(Vector2 startPosition, Map map) {
         this.waves.add(new WaveOne(startPosition, map, this));
         this.waves.add(new WaveTwo(startPosition, map, this));
+        this.waves.add(new WaveThree(startPosition, map, this));
+        this.waves.add(new WaveFour(startPosition, map, this));
     }
 
     public void update() {

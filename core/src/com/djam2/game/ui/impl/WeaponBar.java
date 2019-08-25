@@ -38,6 +38,7 @@ public class WeaponBar extends UiContainer {
     private Label enemiesLabel;
     private Label spaceLabel;
     private Label waveLabel;
+    private Label healthLabel;
 
     private Vector2 centerPosition;
 
@@ -60,9 +61,12 @@ public class WeaponBar extends UiContainer {
         this.informationWindow.row();
         this.spaceLabel = new Label("Space: ", SkinType.Arcade.SKIN);
         this.informationWindow.add(this.spaceLabel);
+        this.informationWindow.row();
+        this.healthLabel = new Label("HP: ", SkinType.Arcade.SKIN);
+        this.informationWindow.add(this.healthLabel);
 
         int informationWidth = 280;
-        int informationHeight = 140;
+        int informationHeight = 160;
         this.informationWindow.setSize(informationWidth, informationHeight);
 
         this.window = new Window("Weapons", this.getDefaultSkin());
@@ -106,6 +110,8 @@ public class WeaponBar extends UiContainer {
 
         int humanWave = map.getWave() + 1;
         this.waveLabel.setText("Wave: " + humanWave + "/" + map.getTotalWaves());
+
+        this.healthLabel.setText("HP: " + (int) this.getPlayer().getHealth());
     }
 
     public void displayWinMessage() {

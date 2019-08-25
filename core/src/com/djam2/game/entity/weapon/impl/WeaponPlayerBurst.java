@@ -6,11 +6,12 @@ import com.djam2.game.entity.impl.EntityBullet;
 import com.djam2.game.entity.impl.EntityBulletBurstBall;
 import com.djam2.game.entity.weapon.Weapon;
 import com.djam2.game.map.Map;
+import com.djam2.game.sound.SfxType;
 
 public class WeaponPlayerBurst extends Weapon {
 
     public WeaponPlayerBurst() {
-        super(0.2f, 0.15f);
+        super(0.2f, 0.2f);
     }
 
     @Override
@@ -19,6 +20,8 @@ public class WeaponPlayerBurst extends Weapon {
         EntityBulletBurstBall bullet = new EntityBulletBurstBall(position, destination, parentMap, damage, EntityType.ENEMY, 3f, 0.4f);
 
         parentMap.spawnEntity(bullet);
+
+        SfxType.playSound(SfxType.Whoosh);
     }
 
 }

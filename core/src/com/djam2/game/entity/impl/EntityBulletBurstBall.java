@@ -18,12 +18,12 @@ public class EntityBulletBurstBall extends EntityBullet {
         float rotation = 0;
 
         while(rotation < 360) {
-            Vector2 destination = this.getPositionForRotation(rotation, 80);
+            Vector2 destination = this.getPositionForRotation(rotation, 100);
             EntityBulletBurst bulletBurst = new EntityBulletBurst(new Vector2(this.getPosition()), destination, this.getParentMap(), 100, EntityType.ENEMY, 3.4f, 0.8f);
 
             this.getParentMap().spawnEntity(bulletBurst);
 
-            rotation += 30;
+            rotation += 15;
         }
     }
 }

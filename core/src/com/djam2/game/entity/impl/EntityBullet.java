@@ -73,6 +73,20 @@ public class EntityBullet extends Entity {
             }
         }
 
+        if(this.targetType == EntityType.ENEMY) {
+            try {
+                EntityEnemy nearestEnemy = this.getParentMap().getNearestEnemy(this.getPosition());
+
+                if (nearestEnemy != null) {
+                    if (nearestEnemy.getPosition().dst(this.getPosition()) < 20) {
+                        this.setRotation((float) this.getRotationTowardPosition(nearestEnemy.getPosition()));
+                    }
+                }
+            } catch(IndexOutOfBoundsException noEnemies) {
+
+            }
+        }
+
         if(this.getParentMap().collisionAt(this.getBody())) {
             this.explode();
         }

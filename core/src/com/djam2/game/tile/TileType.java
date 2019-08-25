@@ -36,7 +36,7 @@ public enum TileType {
 
     Tire(true), Soda(true), Sign(true), Barrel(true), Skulls0(true), Skulls1(true),
     Box(true), Car0(true), Car1(true), Car2(true), Car3(true), Shrub, Barrel1(true),
-    Govern0(true), Govern1(true), Govern2(true), Govern3(true),
+    Govern0(false), Govern1(false), Govern2(false), Govern3(false),
 
     Green0(true), Green1(true), Green2(true), Green3(true), Green4(true), Green5(true),
     Green6(true), Green7(true), Green8(true), Green9(true), Green10(true), Green11(true),

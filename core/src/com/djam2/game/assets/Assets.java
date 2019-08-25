@@ -1,6 +1,8 @@
 package com.djam2.game.assets;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -186,6 +188,8 @@ public class Assets {
         this.loadTexture("entity/zombie_blood0.png");
         this.loadTexture("entity/burst.png");
         this.loadTexture("entity/burstball.png");
+        this.loadTexture("entity/goblin.png");
+        this.loadTexture("entity/goblin_blood0.png");
 
         this.loadTexture("weapon/playerbasic.png");
         this.loadTexture("weapon/playerburst.png");
@@ -197,6 +201,9 @@ public class Assets {
         this.loadSkin("skin/sgxui/sgx-ui.json");
         this.loadSkin("skin/arcade/arcade-ui.json");
         this.loadSkin("skin/clean-crispy/clean-crispy-ui.json");
+
+        this.loadSound("sound/death0.mp3");
+        this.loadSound("sound/whoosh.wav");
 
         this.load();
     }
@@ -227,6 +234,23 @@ public class Assets {
 
     public static Assets getInstance() {
         return instance;
+    }
+
+
+    public void loadMusic(String path) {
+        this.assetManager.load(path, Music.class);
+    }
+
+    public Music getMusic(String path) {
+        return this.assetManager.get(path, Music.class);
+    }
+
+    public void loadSound(String path) {
+        this.assetManager.load(path, Sound.class);
+    }
+
+    public Sound getSound(String path) {
+        return this.assetManager.get(path, Sound.class);
     }
 
 }

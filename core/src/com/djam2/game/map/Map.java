@@ -111,7 +111,7 @@ public class Map {
 
         this.setupPathfindingMap();
 
-        this.generatePath(TileType.Start, TileType.End, this.graphPath);
+        this.generatePath(TileType.Start, TileType.Govern0, this.graphPath);
 
         this.spawnInitialEntities();
 
@@ -362,9 +362,11 @@ public class Map {
 
     private void spawnInitialEntities() {
         this.startPosition = this.getPositionOfFirstTile(TileType.Start, 1);
-        this.endPosition = this.getPositionOfFirstTile(TileType.End, 1);
+        this.endPosition = this.getPositionOfFirstTile(TileType.Govern0, 1);
 
-        this.spawnEntity(new EntityPlayer(new Vector2(startPosition.x - 64, startPosition.y - 64), this));
+        Vector2 playerStartPosition = new Vector2(this.getPositionOfFirstTile(TileType.Govern0, 1));
+
+        this.spawnEntity(new EntityPlayer(new Vector2(playerStartPosition.x - 64, playerStartPosition.y - 64), this));
 
         /**this.spawnEntity(new EntityBat(new Vector2(startPosition), this));
         this.spawnEntity(new EntityZombie(new Vector2(startPosition), this));
@@ -537,20 +539,24 @@ public class Map {
         return false;
     }
 
-    public EntityEnemy getNearestEnemy() {
-        Vector2 playerPosition = this.getPlayer().getPosition();
-
+    public EntityEnemy getNearestEnemy(Vector2 from) {
         List<EntityEnemy> enemies = this.getEnemies();
 
         EntityEnemy closestEnemy = enemies.get(0);
 
         for(EntityEnemy enemy : enemies) {
-            if(enemy.getPosition().dst(playerPosition) < closestEnemy.getPosition().dst(playerPosition)) {
+            if(enemy.getPosition().dst(from) < closestEnemy.getPosition().dst(from)) {
                 closestEnemy = enemy;
             }
         }
 
         return closestEnemy;
+    }
+
+    public EntityEnemy getNearestEnemy() {
+        Vector2 playerPosition = this.getPlayer().getPosition();
+
+        return this.getNearestEnemy(playerPosition);
     }
 
     public List<EntityEnemy> getEnemies() {

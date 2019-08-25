@@ -9,6 +9,7 @@ import com.djam2.game.entity.Direction;
 import com.djam2.game.entity.EntityType;
 import com.djam2.game.map.Map;
 import com.djam2.game.map.MapDefinition;
+import com.djam2.game.sound.SfxType;
 import com.djam2.game.tile.TileType;
 import com.djam2.game.tile.pathfinding.TileGraph;
 import com.djam2.game.tile.pathfinding.TileNode;
@@ -33,7 +34,7 @@ public abstract class EntityEnemy extends LivingEntity {
 
         this.tileGraph = parentMap.generateUpdatedTileGraph();
 
-        parentMap.generatePath(TileType.Start, TileType.End, this.graphPath);
+        parentMap.generatePath(TileType.Start, TileType.Govern0, this.graphPath);
 
         MapDefinition mapDefinition = parentMap.getMapDefinition();
 
@@ -105,4 +106,9 @@ public abstract class EntityEnemy extends LivingEntity {
         }
     }
 
+    @Override
+    public void die() {
+        super.die();
+        SfxType.playSound(SfxType.Death0);
+    }
 }
