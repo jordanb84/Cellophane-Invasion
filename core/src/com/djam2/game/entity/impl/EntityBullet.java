@@ -24,12 +24,14 @@ public class EntityBullet extends Entity {
 
     private EntityType targetType;
 
-    public EntityBullet(Vector2 position, Vector2 destination, Map parentMap, float damage, EntityType targetType) {
+    private float explosionSize;
+
+    public EntityBullet(Vector2 position, Vector2 destination, Map parentMap, float damage, EntityType targetType, float speed, float explosionSize) {
         super(position, parentMap, 2, EntityType.PROJECTILE);
         this.destination = destination;
         this.setSprite(Assets.getInstance().getSprite("entity/bullet.png"));
         this.destinationBody = new Rectangle(this.destination.x, this.destination.y, this.getWidth(), this.getHeight());
-        this.setSpeed(3.2f, 3.2f);
+        this.setSpeed(speed, speed);
 
         this.setRotation(((float) this.getRotationTowardPosition(this.destination)));
 
@@ -38,6 +40,8 @@ public class EntityBullet extends Entity {
 
         this.damage = damage;
         this.targetType = targetType;
+
+        this.explosionSize = explosionSize;
     }
 
     @Override
@@ -75,7 +79,7 @@ public class EntityBullet extends Entity {
 
     private void explode() {
         this.getParentMap().despawnEntity(this);
-        this.getParentMap().spawnEntity(new EntityExplosion(new Vector2(this.getPosition()), this.getParentMap(), this.getRotation()));
+        this.getParentMap().spawnEntity(new EntityExplosion(new Vector2(this.getPosition()), this.getParentMap(), this.getRotation(), this.explosionSize));
     }
 
     @Override

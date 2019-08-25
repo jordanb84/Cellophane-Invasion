@@ -57,6 +57,8 @@ public class Map {
     private boolean drawPath;
     private Array<TileNode> pathTiles;
 
+    private EntityPlayer player;
+
     public Map(MapDefinition mapDefinition, List<MapLayer> mapLayers) {
         this.mapDefinition = mapDefinition;
         this.mapLayers = mapLayers;
@@ -286,6 +288,10 @@ public class Map {
 
     public void spawnEntity(Entity entity) {
         this.entitySpawnQueue.add(entity);
+
+        if(entity instanceof EntityPlayer) {
+            this.player = ((EntityPlayer) entity);
+        }
     }
 
     public void despawnEntity(Entity entity) {
@@ -360,6 +366,14 @@ public class Map {
 
     public RayHandler getRayHandler() {
         return this.rayHandler;
+    }
+
+    public EntityPlayer getPlayer() {
+        return this.player;
+    }
+
+    public void setPlayer(EntityPlayer player) {
+        this.player = player;
     }
 
 }
