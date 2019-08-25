@@ -31,12 +31,14 @@ public abstract class Weapon {
         }
     }
 
-    public void attemptFire(Vector2 position, Vector2 destination, Map parentMap) {
-        if(this.elapsedSinceFire >= this.fireInterval && this.isCharged()) {
-            this.elapsedSinceFire = 0;
-            this.fire(position, destination, parentMap);
+    public void attemptFire(Vector2 position, Vector2 destination, Map parentMap, boolean canFire) {
+        if(canFire) {
+            if (this.elapsedSinceFire >= this.fireInterval && this.isCharged()) {
+                this.elapsedSinceFire = 0;
+                this.fire(position, destination, parentMap);
 
-            this.setCharged(false);
+                this.setCharged(false);
+            }
         }
     }
 

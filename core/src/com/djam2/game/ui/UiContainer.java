@@ -33,6 +33,8 @@ public abstract class UiContainer {
         this.rootStage.addActor(this.rootTable);
 
         Gdx.input.setInputProcessor(this.rootStage);
+
+        //this.rootStage.setDebugAll(true);
     }
 
     public void render(SpriteBatch batch) {

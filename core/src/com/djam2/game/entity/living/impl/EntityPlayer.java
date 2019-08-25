@@ -18,6 +18,8 @@ public class EntityPlayer extends LivingEntity {
 
     private WeaponBar weaponBar;
 
+    private boolean canFire;
+
     public EntityPlayer(Vector2 position, Map parentMap) {
         super(position, parentMap, 5, EntityType.PLAYER);
         this.setSpeed(11, 11);
@@ -31,13 +33,13 @@ public class EntityPlayer extends LivingEntity {
         camera.position.set(this.getPosition().x + this.getWidth() / 2, this.getPosition().y + this.getHeight() / 2, 0);
         camera.update();
 
+        this.setCanFire(true);
         this.weaponBar.update(camera);
     }
 
     @Override
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         super.render(batch, camera);
-        this.weaponBar.render(batch);
     }
 
     @Override
@@ -63,12 +65,24 @@ public class EntityPlayer extends LivingEntity {
 
     @Override
     public EntityMind setupMind() {
-        this.weaponBar = new WeaponBar();
+        this.weaponBar = new WeaponBar(this);
         return new PlayerMind(this, this.weaponBar);
     }
 
     public void resize(int width, int height) {
         this.weaponBar.resize(width, height);
+    }
+
+    public boolean canFire() {
+        return this.canFire;
+    }
+
+    public void setCanFire(boolean canFire) {
+        this.canFire = canFire;
+    }
+
+    public WeaponBar getWeaponBar() {
+        return this.weaponBar;
     }
 
 }

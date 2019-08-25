@@ -151,6 +151,10 @@ public class Map {
         this.rayHandler.setCombinedMatrix(camera);
         this.rayHandler.updateAndRender();
         batch.begin();
+
+        if(this.getPlayer() != null) {
+            this.getPlayer().getWeaponBar().render(batch);
+        }
     }
 
     public void update(OrthographicCamera camera) {

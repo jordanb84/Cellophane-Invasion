@@ -23,6 +23,8 @@ public class WeaponSlot extends ImageButton {
     private float selectedMaxWidth;
     private float selectedMaxHeight;
 
+    private WeaponBar weaponBar;
+
     public WeaponSlot(final WeaponBar weaponBar, WeaponType weaponType, final int slotIndex) {
         super(SkinType.Sgx.SKIN);
         this.weaponType = weaponType;
@@ -39,6 +41,8 @@ public class WeaponSlot extends ImageButton {
                 weaponBar.setSelectedWeapon(slotIndex);
             }
         });
+
+        this.weaponBar = weaponBar;
     }
 
     private void setupTooltip() {
@@ -66,18 +70,18 @@ public class WeaponSlot extends ImageButton {
             sprite.setColor(Color.GREEN);
             sprite.draw(batch);
             sprite.setColor(Color.WHITE);
+        }
 
-            if(!this.getWeapon().isCharged() && this.getWeapon().requiresCharge()) {
-                this.selectedSprite.setPosition(sprite.getX(), sprite.getY());
-                this.selectedSprite.setColor(Color.RED);
-                this.selectedSprite.setAlpha(0.5f);
-                this.selectedSprite.setSize(this.selectedMaxWidth, this.selectedMaxHeight);
-                this.selectedSprite.draw(batch);
-                this.selectedSprite.setColor(Color.WHITE);
-                this.selectedSprite.setAlpha(0.8f);
-                this.selectedSprite.setSize(this.selectedSprite.getWidth(), this.selectedMaxHeight * this.getWeapon().getChargePercentage());
-                this.selectedSprite.draw(batch);
-            }
+        if(!this.getWeapon().isCharged() && this.getWeapon().requiresCharge()) {
+            this.selectedSprite.setPosition(sprite.getX(), sprite.getY());
+            this.selectedSprite.setColor(Color.RED);
+            this.selectedSprite.setAlpha(0.5f);
+            this.selectedSprite.setSize(this.selectedMaxWidth, this.selectedMaxHeight);
+            this.selectedSprite.draw(batch);
+            this.selectedSprite.setColor(Color.WHITE);
+            this.selectedSprite.setAlpha(0.8f);
+            this.selectedSprite.setSize(this.selectedSprite.getWidth(), this.selectedMaxHeight * this.getWeapon().getChargePercentage());
+            this.selectedSprite.draw(batch);
         }
 
         this.elapsedSinceFire += 1 * Gdx.graphics.getDeltaTime();
@@ -91,6 +95,10 @@ public class WeaponSlot extends ImageButton {
                 this.getWeapon().setCharged(true);
                 this.getWeapon().setChargePercentage(0);
             }
+        }
+
+        if(this.isOver()) {
+            this.weaponBar.getPlayer().setCanFire(false);
         }
     }
 

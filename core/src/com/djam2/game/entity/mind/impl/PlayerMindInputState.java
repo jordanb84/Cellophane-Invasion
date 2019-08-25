@@ -10,6 +10,7 @@ import com.djam2.game.entity.Direction;
 import com.djam2.game.entity.EntityType;
 import com.djam2.game.entity.impl.EntityBullet;
 import com.djam2.game.entity.living.LivingEntity;
+import com.djam2.game.entity.living.impl.EntityPlayer;
 import com.djam2.game.entity.mind.EntityMind;
 import com.djam2.game.entity.mind.EntityMindState;
 import com.djam2.game.entity.weapon.Weapon;
@@ -21,10 +22,12 @@ public class PlayerMindInputState extends EntityMindState {
 
     private WeaponBar weaponBar;
 
+    private EntityPlayer player;
+
     public PlayerMindInputState(EntityMind parentMind, WeaponBar weaponBar) {
         super(parentMind, "input");
         this.weaponBar = weaponBar;
-        System.out.println("Weapon bar is " + weaponBar);
+        this.player = ((EntityPlayer) parentMind.getParentEntity());
     }
 
     @Override
@@ -118,7 +121,7 @@ public class PlayerMindInputState extends EntityMindState {
         Vector3 mousePosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(mousePosition);
 
-        this.getWeapon().attemptFire(new Vector2(this.getParentEntity().getPosition()), new Vector2(mousePosition.x, mousePosition.y), this.getParentMap());
+        this.getWeapon().attemptFire(new Vector2(this.getParentEntity().getPosition()), new Vector2(mousePosition.x, mousePosition.y), this.getParentMap(), this.player.canFire());
     }
 
     @Override
