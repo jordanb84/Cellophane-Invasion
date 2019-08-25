@@ -117,6 +117,46 @@ public class Assets {
         this.loadTexture("tile/empty7.png");
         this.loadTexture("tile/empty8.png");
         this.loadTexture("tile/empty9.png");
+        this.loadTexture("tile/fence0.png");
+        this.loadTexture("tile/fence1.png");
+        this.loadTexture("tile/fence2.png");
+        this.loadTexture("tile/fence3.png");
+        this.loadTexture("tile/fence4.png");
+        this.loadTexture("tile/fence5.png");
+        this.loadTexture("tile/fence6.png");
+        this.loadTexture("tile/fence7.png");
+        this.loadTexture("tile/tire.png");
+        this.loadTexture("tile/soda.png");
+        this.loadTexture("tile/sign.png");
+        this.loadTexture("tile/barrel.png");
+        this.loadTexture("tile/skulls0.png");
+        this.loadTexture("tile/skulls1.png");
+        this.loadTexture("tile/box.png");
+        this.loadTexture("tile/car0.png");
+        this.loadTexture("tile/car1.png");
+        this.loadTexture("tile/car2.png");
+        this.loadTexture("tile/car3.png");
+        this.loadTexture("tile/shrub.png");
+        this.loadTexture("tile/barrel1.png");
+        this.loadTexture("tile/govern0.png");
+        this.loadTexture("tile/govern1.png");
+        this.loadTexture("tile/govern2.png");
+        this.loadTexture("tile/govern3.png");
+        this.loadTexture("tile/green0.png");
+        this.loadTexture("tile/green1.png");
+        this.loadTexture("tile/green2.png");
+        this.loadTexture("tile/green3.png");
+        this.loadTexture("tile/green4.png");
+        this.loadTexture("tile/green5.png");
+        this.loadTexture("tile/green6.png");
+        this.loadTexture("tile/green7.png");
+        this.loadTexture("tile/green8.png");
+        this.loadTexture("tile/green9.png");
+        this.loadTexture("tile/green10.png");
+        this.loadTexture("tile/green11.png");
+        this.loadTexture("tile/green12.png");
+        this.loadTexture("tile/green13.png");
+        this.loadTexture("tile/green14.png");
 
         this.loadTexture("entity/player_up0.png");
         this.loadTexture("entity/player_up1.png");
@@ -141,6 +181,8 @@ public class Assets {
         this.loadTexture("entity/explosion11.png");
         this.loadTexture("entity/bat.png");
         this.loadTexture("entity/bat_blood0.png");
+        this.loadTexture("entity/zombie.png");
+        this.loadTexture("entity/zombie_blood0.png");
 
         this.load();
     }

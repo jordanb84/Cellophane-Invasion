@@ -31,7 +31,7 @@ public class EntityExplosion extends Entity {
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         this.getSprite().setPosition(this.getPosition().x - this.getWidth() / 2, this.getPosition().y - this.getHeight() / 2);
         this.getSprite().setRotation(this.getRotation());
-        this.getSprite().setAlpha(0.8f);
+        this.getSprite().setAlpha(0.7f);
         this.getSprite().setScale(this.explosionSize);
         this.getSprite().draw(batch);
         this.getSprite().setRotation(0);

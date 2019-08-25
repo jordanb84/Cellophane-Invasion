@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.djam2.game.entity.Entity;
 import com.djam2.game.entity.living.impl.EntityBat;
 import com.djam2.game.entity.living.impl.EntityPlayer;
+import com.djam2.game.entity.living.impl.EntityZombie;
 import com.djam2.game.tile.TileType;
 import com.djam2.game.tile.pathfinding.ManhattanHeuristic;
 import com.djam2.game.tile.pathfinding.TileGraph;
@@ -257,9 +258,10 @@ public class Map {
     private void spawnInitialEntities() {
         Vector2 startPosition = this.getPositionOfFirstTile(TileType.Start, 1);
 
-        this.spawnEntity(new EntityPlayer(new Vector2(startPosition.x + 64, startPosition.y + 64), this));
+        this.spawnEntity(new EntityPlayer(new Vector2(startPosition.x - 64, startPosition.y - 64), this));
 
-        this.spawnEntity(new EntityBat(startPosition, this));
+        this.spawnEntity(new EntityBat(new Vector2(startPosition), this));
+        this.spawnEntity(new EntityZombie(new Vector2(startPosition), this));
 
         Random batPositionRandom = new Random();
 
