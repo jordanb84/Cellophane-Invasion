@@ -20,6 +20,8 @@ public abstract class State {
 
     public abstract void resize(int width, int height);
 
+    public abstract void reset();
+
     public StateManager getManager() {
         return this.manager;
     }

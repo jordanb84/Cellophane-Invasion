@@ -24,6 +24,7 @@ public class StateMap extends State {
         //this.map = new Map(mapDefinition, TileType.Ground);
 
         this.map = MapImporter.getInstance().getMapFromFile(Gdx.files.internal("map/path.map"));
+        this.map.setStateManager(this.getManager());
     }
 
     @Override
@@ -39,6 +40,11 @@ public class StateMap extends State {
     @Override
     public void resize(int width, int height) {
         this.map.resize(width, height);
+    }
+
+    @Override
+    public void reset() {
+
     }
 
 }

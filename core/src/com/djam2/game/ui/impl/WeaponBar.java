@@ -116,10 +116,23 @@ public class WeaponBar extends UiContainer {
 
         wonWindow.setSize(wonWidth, wonHeight);
 
-        //Label wonLabel = new Label("Congratulations! You've fought off all waves of enemies and stopped them from overtaking your house", SkinType.Arcade.SKIN);
         Label wonLabel = new Label("Congratulations!", SkinType.Arcade.SKIN);
 
-        //wonLabel.setWrap(true);
+        wonWindow.add(wonLabel).fill();
+
+        wonWindow.setPosition(this.centerPosition.x - wonWidth / 2, this.centerPosition.y - wonHeight / 2);
+        this.getRootTable().addActor(wonWindow);
+    }
+
+    public void displayLostMessage() {
+        Window wonWindow = new Window("You've died!", this.getDefaultSkin());
+
+        int wonWidth = 400;
+        int wonHeight = 200;
+
+        wonWindow.setSize(wonWidth, wonHeight);
+
+        Label wonLabel = new Label("Game over. Restarting...", SkinType.Arcade.SKIN);
 
         wonWindow.add(wonLabel).fill();
 

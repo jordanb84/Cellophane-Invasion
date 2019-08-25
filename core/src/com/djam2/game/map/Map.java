@@ -76,6 +76,10 @@ public class Map {
 
     private Sprite arrowSprite;
 
+    private boolean lost;
+    private float elaspedSinceLost;
+    private boolean shownLostMessage;
+
     public Map(MapDefinition mapDefinition, List<MapLayer> mapLayers) {
         this.mapDefinition = mapDefinition;
         this.mapLayers = mapLayers;
@@ -178,19 +182,21 @@ public class Map {
             if (!this.enemyWithinSight(camera) || drawArrow) {
                 EntityEnemy nearestEnemy = this.getNearestEnemy();
 
-                System.out.println("No enemies within sight!");
+                if(nearestEnemy.getPosition().dst(this.getPlayer().getPosition()) > 200) {
+                    //System.out.println("No enemies within sight!");
 
-                this.arrowSprite.setAlpha(0.6f);
-               // Vector2 spritePosition = new Vector2(camera.position.x - camera.viewportWidth / 2, camera.position.y);
-                Vector2 spritePosition = new Vector2(player.getPosition().x - this.getPlayer().getWidth() / 2, player.getPosition().y - this.arrowSprite.getHeight() / 2 + 100);
+                    this.arrowSprite.setAlpha(0.6f);
+                    // Vector2 spritePosition = new Vector2(camera.position.x - camera.viewportWidth / 2, camera.position.y);
+                    Vector2 spritePosition = new Vector2(player.getPosition().x - this.getPlayer().getWidth() / 2, player.getPosition().y - this.arrowSprite.getHeight() / 2 + 100);
 
-                //System.out.println("Drawing at " + spritePosition.x + "/" + spritePosition.y);
+                    //System.out.println("Drawing at " + spritePosition.x + "/" + spritePosition.y);
 
-                double rotation = this.getRotationTowardPosition(nearestEnemy.getPosition(), this.getPlayer().getPosition());
+                    double rotation = this.getRotationTowardPosition(nearestEnemy.getPosition(), this.getPlayer().getPosition());
 
-                this.arrowSprite.setRotation((float) rotation);
-                this.arrowSprite.setPosition(spritePosition.x, spritePosition.y);
-                this.arrowSprite.draw(batch);
+                    this.arrowSprite.setRotation((float) rotation);
+                    this.arrowSprite.setPosition(spritePosition.x, spritePosition.y);
+                    this.arrowSprite.draw(batch);
+                }
             }
         } catch(IndexOutOfBoundsException noEnemies) {
 
@@ -198,31 +204,51 @@ public class Map {
     }
 
     public void update(OrthographicCamera camera) {
-        this.world.step(1/60f, 6, 2);
+        if(!this.lost) {
+            this.world.step(1 / 60f, 6, 2);
 
-        for(MapLayer mapLayer : this.mapLayers) {
-            mapLayer.update(this, camera);
+            for (MapLayer mapLayer : this.mapLayers) {
+                mapLayer.update(this, camera);
+            }
+
+            this.entities.addAll(this.entitySpawnQueue);
+            this.entitySpawnQueue.clear();
+
+            this.entities.removeAll(this.entityDespawnQueue);
+            this.entityDespawnQueue.clear();
+
+            for (Entity entity : this.getEntities()) {
+                entity.update(camera);
+                this.applyEntityFriction(entity);
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+                this.renderDebugBodies = !this.renderDebugBodies;
+            }
+
+            this.waveManager.update();
+
+            if (this.waveManager.isFinished() && this.getEnemyCount() == 0 && !this.won) {
+                this.win();
+            }
         }
 
-        this.entities.addAll(this.entitySpawnQueue);
-        this.entitySpawnQueue.clear();
+        if(this.lost) {
+            this.elaspedSinceLost += 1 * Gdx.graphics.getDeltaTime();
 
-        this.entities.removeAll(this.entityDespawnQueue);
-        this.entityDespawnQueue.clear();
-
-        for(Entity entity : this.getEntities()) {
-            entity.update(camera);
-            this.applyEntityFriction(entity);
+            if(this.elaspedSinceLost > 6) {
+                this.stateManager.getActiveState().reset();
+            }
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            this.renderDebugBodies = !this.renderDebugBodies;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+            this.lose();
         }
 
-        this.waveManager.update();
-
-        if(this.waveManager.isFinished() && this.getEnemyCount() == 0 && !this.won) {
-            this.win();
+        if(this.getPlayer() != null) {
+            if(this.getPlayer().getHealth() <= 0) {
+                this.lose();
+            }
         }
     }
 
@@ -491,6 +517,12 @@ public class Map {
         this.getPlayer().getWeaponBar().displayWinMessage();
     }
 
+    public void lose() {
+        this.lost = true;
+        this.getPlayer().getWeaponBar().displayLostMessage();
+        this.shownLostMessage = true;
+    }
+
     public boolean enemyWithinSight(OrthographicCamera camera) {
         Rectangle cameraBody = new Rectangle(camera.position.x - camera.viewportWidth, camera.position.y - camera.viewportHeight, camera.viewportWidth / 2, camera.viewportHeight / 2);
 
@@ -541,6 +573,10 @@ public class Map {
         angle -= 90;
 
         return angle;
+    }
+
+    public void setStateManager(StateManager stateManager) {
+        this.stateManager = stateManager;
     }
 
 }

@@ -79,6 +79,7 @@ public abstract class EntityEnemy extends LivingEntity {
 
             if(this.destinationTileIndex >= this.graphPath.nodes.size) {
                 this.die();
+                this.getParentMap().lose();
             } else {
                 this.updateDestinationBody(this.getParentMap().getMapDefinition());
             }
