@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.djam2.game.sound.MusicType;
 import com.djam2.game.state.StateManager;
 import com.djam2.game.state.impl.StateEditor;
 import com.djam2.game.state.impl.StateMap;
@@ -29,6 +30,10 @@ public class Game extends ApplicationAdapter {
 		this.stateManager.registerState("editor", new StateEditor(this.stateManager));
 		this.stateManager.registerState("map", new StateMap(this.stateManager));
 		this.stateManager.setActiveState("map");
+
+		Gdx.graphics.setTitle("Cellophane Invasion - Made for Discord Jam 2");
+
+		MusicType.loop(MusicType.Background);
 	}
 
 	@Override

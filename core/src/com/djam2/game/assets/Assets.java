@@ -213,6 +213,8 @@ public class Assets {
         this.loadSound("sound/death0.mp3");
         this.loadSound("sound/whoosh.wav");
 
+        this.loadMusic("music/bg.mp3");
+
         this.load();
     }
 
