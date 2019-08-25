@@ -9,7 +9,8 @@ import com.djam2.game.map.Map;
 public class WeaponPlayerBasic extends Weapon {
 
     public WeaponPlayerBasic() {
-        super(0.2f);
+        super(0.2f, 1);
+        this.setRequiresCharge(false);
     }
 
     @Override

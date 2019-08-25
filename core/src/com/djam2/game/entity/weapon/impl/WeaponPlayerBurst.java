@@ -10,7 +10,7 @@ import com.djam2.game.map.Map;
 public class WeaponPlayerBurst extends Weapon {
 
     public WeaponPlayerBurst() {
-        super(0.2f);
+        super(0.2f, 0.15f);
     }
 
     @Override
