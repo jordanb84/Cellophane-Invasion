@@ -349,11 +349,14 @@ public abstract class Entity {
 
         float delta = Gdx.graphics.getDeltaTime();
 
-        this.getPosition().add(xRotationMovement, 0);
-        this.getPosition().add(0, yRotationMovement);
+        Rectangle newBody = new Rectangle(this.getPosition().x + xRotationMovement, this.getPosition().y + yRotationMovement, this.getWidth(), this.getHeight());
 
-        this.modifyVelocity(this.getAcceleration().x * 5 * delta, this.getAcceleration().y * 5 * delta, true);
+        if(!(this.getParentMap().collisionAt(newBody))) {
+            this.getPosition().add(xRotationMovement, 0);
+            this.getPosition().add(0, yRotationMovement);
 
+            this.modifyVelocity(this.getAcceleration().x * 5 * delta, this.getAcceleration().y * 5 * delta, true);
+        }
     }
 
     public void moveAlongCurrentRotation() {

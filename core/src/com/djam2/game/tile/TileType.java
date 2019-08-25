@@ -23,7 +23,13 @@ public enum TileType {
 
     Grave0(true), Grave1(true), Gas0(true), Gas1(true), Gas2(true), Fire(true),
 
-    PathBlock
+    PathBlock,
+
+    Blue0(true), Blue1(true), Blue2(true), Blue3(true), Blue4(true), Blue5(true),
+    Blue6(true), Blue7(true), Blue8(true), Blue9(true), Blue10(true),
+
+    Empty0(true), Empty1(true), Empty2(true), Empty3(true), Empty4(true), Empty5(true),
+    Empty6(true), Empty7(true), Empty8(true), Empty9(true)
     ;
 
     TileType(String spritePath, boolean solid) {

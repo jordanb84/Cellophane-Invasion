@@ -55,7 +55,7 @@ public class StateEditor extends State {
 
         MapDefinition mapDefinition = new MapDefinition(3, 60, 60, 16, 16);
         //this.map = new Map(mapDefinition, TileType.Ground);
-        this.map = MapImporter.getInstance().getMapFromFile(Gdx.files.internal("map/roads9.map"));
+        this.map = MapImporter.getInstance().getMapFromFile(Gdx.files.internal("map/roads11.map"));
 
         this.overlaySprite = Assets.getInstance().getSprite("tile/overlay.png");
     }
@@ -101,7 +101,7 @@ public class StateEditor extends State {
                     }
                 }
 
-                if(column >= 3) {
+                if(column >= 6) {
                     column = 0;
                     row++;
                 }

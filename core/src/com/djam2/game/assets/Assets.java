@@ -96,6 +96,27 @@ public class Assets {
         this.loadTexture("tile/gas2.png");
         this.loadTexture("tile/fire.png");
         this.loadTexture("tile/pathblock.png");
+        this.loadTexture("tile/blue0.png");
+        this.loadTexture("tile/blue1.png");
+        this.loadTexture("tile/blue2.png");
+        this.loadTexture("tile/blue3.png");
+        this.loadTexture("tile/blue4.png");
+        this.loadTexture("tile/blue5.png");
+        this.loadTexture("tile/blue6.png");
+        this.loadTexture("tile/blue7.png");
+        this.loadTexture("tile/blue8.png");
+        this.loadTexture("tile/blue9.png");
+        this.loadTexture("tile/blue10.png");
+        this.loadTexture("tile/empty0.png");
+        this.loadTexture("tile/empty1.png");
+        this.loadTexture("tile/empty2.png");
+        this.loadTexture("tile/empty3.png");
+        this.loadTexture("tile/empty4.png");
+        this.loadTexture("tile/empty5.png");
+        this.loadTexture("tile/empty6.png");
+        this.loadTexture("tile/empty7.png");
+        this.loadTexture("tile/empty8.png");
+        this.loadTexture("tile/empty9.png");
 
         this.loadTexture("entity/player_up0.png");
         this.loadTexture("entity/player_up1.png");

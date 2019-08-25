@@ -64,7 +64,10 @@ public class EntityBullet extends Entity {
             if(entity.getEntityType() == this.targetType) {
                 if (entity.getBody().overlaps(this.getBody())) {
                     ((LivingEntity) entity).damage(this.damage);
-                    entity.knockback(this.getRotation(), 2);
+
+                    if(!(entity instanceof EntityPlayer)) {
+                        entity.knockback(this.getRotation(), 2);
+                    }
                     this.explode();
                 }
             }

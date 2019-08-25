@@ -123,6 +123,10 @@ public class Map {
                 }
             }
 
+            for(MapLayer mapLayer : this.mapLayers) {
+                mapLayer.renderDebugBodies(this.shapeRenderer);
+            }
+
             this.shapeRenderer.end();
             batch.begin();
         }

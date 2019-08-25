@@ -2,6 +2,7 @@ package com.djam2.game.map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.djam2.game.tile.TileData;
@@ -52,6 +53,21 @@ public class MapLayer {
                 TileData tileData = this.layerTileData.get(tileIndex);
 
                 this.layerTiles.get(tileIndex).TILE.update(parentMap, camera, tilePosition, tileData);
+            }
+        }
+    }
+
+    public void renderDebugBodies(ShapeRenderer shapeRenderer) {
+        for(int row = 0; row < this.mapDefinition.getMapHeight(); row++) {
+            for(int column = 0; column < this.mapDefinition.getMapWidth(); column++) {
+                int tileIndex = column + row * this.mapDefinition.getMapHeight();
+
+                if(this.getLayerTiles().get(tileIndex).SOLID) {
+
+                    Vector2 tilePosition = new Vector2(column * this.mapDefinition.getTileWidth(), row * this.mapDefinition.getTileHeight());
+
+                    shapeRenderer.rect(tilePosition.x, tilePosition.y, this.mapDefinition.getTileWidth(), this.mapDefinition.getTileHeight());
+                }
             }
         }
     }
