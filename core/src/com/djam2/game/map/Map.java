@@ -6,13 +6,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -104,12 +106,15 @@ public class Map {
         this.setup();
     }
 
+    private TextureRegion tileMap;
+
     private void setup() {
         this.setupPhysicsWorld();
 
         this.rayHandler = new RayHandler(this.world);
         this.rayHandler.setAmbientLight(Color.LIGHT_GRAY);
         RayHandler.useDiffuseLight(true);
+        this.rayHandler.setCulling(true);
 
         this.setupPathfindingMap();
 
@@ -123,12 +128,44 @@ public class Map {
         this.waveManager = new WaveManager(new Vector2(this.startPosition), this);
 
         this.arrowSprite = Assets.getInstance().getSprite("arrow.png");
+
+        this.regenerateTilemapFrameBuffer();
+    }
+
+    private void regenerateTilemapFrameBuffer() {
+        int pixelsWidth = this.mapDefinition.getMapWidth() * this.mapDefinition.getTileWidth();
+        int pixelsHeight = this.mapDefinition.getMapHeight() * this.mapDefinition.getTileHeight();
+
+        FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, pixelsWidth, pixelsHeight, false);
+
+        SpriteBatch spriteBatch = new SpriteBatch();
+
+        OrthographicCamera camera = new OrthographicCamera();
+        camera.setToOrtho(false, pixelsWidth, pixelsHeight);
+
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        frameBuffer.begin();
+
+        spriteBatch.setProjectionMatrix(camera.combined);
+        spriteBatch.begin();
+
+        for(MapLayer mapLayer : this.mapLayers) {
+            mapLayer.render(this, spriteBatch, camera);
+        }
+
+        spriteBatch.end();
+        frameBuffer.end();
+
+        frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        this.tileMap = new TextureRegion(frameBuffer.getColorBufferTexture());
+        this.tileMap.flip(false, true);
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
-        for(MapLayer mapLayer : this.mapLayers) {
-            mapLayer.render(this, batch, camera);
-        }
+        batch.draw(this.tileMap, 0, 0);
 
         for(Entity entity : this.getEntities()) {
             if(!(entity instanceof EntityPlayer)) {

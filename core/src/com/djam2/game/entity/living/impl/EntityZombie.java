@@ -17,7 +17,6 @@ public class EntityZombie extends EntityEnemy {
     public EntityZombie(Vector2 position, Map parentMap) {
         super(position, parentMap, 6);
         this.setSpeed(4, 4);
-        this.addPhysicsBody();
         this.addLight(Color.WHITE, 40); //TODO green maybe?
         this.setHealth(100);
     }
